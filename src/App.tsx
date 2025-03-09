@@ -6,7 +6,7 @@ function App() {
   return (
     <Router>
       <Header/>
-      <main className='p-6'>
+      <main>
         <Routes>
           <Route path="/home" element={<Navigate to="/home" />} /> // Invoice List component 
           <Route path="/invoice/:id" element={<div>Home</div>} /> // Invoice detail component
