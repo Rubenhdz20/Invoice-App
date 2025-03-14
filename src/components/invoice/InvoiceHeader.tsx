@@ -1,12 +1,10 @@
-import { useNavigate } from "react-router-dom";
+import NewInvoiceButton from "../buttons/NewInvoiceButton";
 
 type InvoiceHeaderProps = {
     invoiceCount: number;   
 };
 
 const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoiceCount }) => {
-    const navigate = useNavigate();
-
     return (
         <div className="flex justify-between items-center p-6 bg-[#141625] text-white">
             <div>
@@ -22,12 +20,7 @@ const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoiceCount }) => {
                     <option>Draft</option>
                 </select>
             </div>
-            <button className="flex items-center gap-2 bg-[#7C5DFA] text-white px-2 py-2 rounded-full shadow-md hover:bg-[#9277FF] transition" onClick={() => navigate('/create-invoice')}>
-                <div className="bg-white text-[#7C5DFA] rounded-full w-10 h-10 flex items-center justify-center">
-                    <span className="text-xl font-bold">+</span>
-                </div>
-                <span className="text-lg font-semibold">New</span>
-            </button>
+            <NewInvoiceButton />
         </div>
     );
 };
