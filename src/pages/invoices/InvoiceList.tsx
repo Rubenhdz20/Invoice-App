@@ -11,4 +11,4 @@ const InvoiceList = () => {
 export default InvoiceList;
 
 
-// # Displays InvoiceHeader + InvoiceCard list
+// # Displays InvoiceHeader + InvoiceCard 
