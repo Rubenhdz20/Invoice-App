@@ -1,19 +1,42 @@
 import React from "react";
+import dayjs from "dayjs";
 import { useInvoiceStore } from "../../context/InvoiceStore";
 
-const InvoiceCard = ({ invoice }) => {
+interface Invoice {
+    id: string;
+    createdAt: string;
+    paymentDue: string;
+    clientName: string;
+    total: number;
+    status: string;
+}
+
+const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
     const { id, createdAt, paymentDue, clientName, total, status } = invoice;
 
+    const formattedDate = dayjs(createdAt).format("DD MMM YYYY");
+    const formattedPaymentDue = dayjs(paymentDue).format("DD MMM YYYY");
+
     return (
-        <div className="bg-[#1E2139] rounded-lg p-6 flex justify-between items-center">
+        <div className="bg-[#1E2139] rounded-lg p-6 flex justify-between">
             <div>
-                <p className="text-[#7C5DFA] text-sm">#{id}</p>
-                <p className="text-[#0C0E16] text-lg font-bold">{clientName}</p>
-                <p className="text-[#888EB0] text-sm">{createdAt}</p>
+                <p className="mb-6 text-[#7E88C3] text-sm">#<span className="text-white">{id}</span></p>
+                <p className="mb-2 text-[#DFE3FA] text-sm">Due {formattedDate}</p>
+                <p className="text-white text-md font-bold">${total}</p>
             </div>
-            <div>
-                <p className="text-[#0C0E16] text-lg font-bold">${total}</p>
-                <p className={`text-sm font-bold ${status === "paid" ? "text-[#33D69F]" : "text-[#FF8B37]"}`}>{status}</p>
+            <div className="flex flex-col items-end justify-between">
+                <p className="mb-6 text-white text-md font-bold">{clientName}</p>
+                <p
+                    className={`inline-flex items-center w-24 h-10 gap-2 text-sm font-bold px-3 py-1 rounded-md 
+                        ${
+                        status === "Paid"
+                            ? "bg-[#33D69F]/10 text-[#33D69F]"
+                            : "bg-[#FF8B37]/10 text-[#FF8B37]"
+                        }
+                    `}
+                >
+                    {status}    
+                </p>
             </div>
         </div>
     )
