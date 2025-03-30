@@ -15,10 +15,9 @@ const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
     const { id, createdAt, paymentDue, clientName, total, status } = invoice;
 
     const formattedDate = dayjs(createdAt).format("DD MMM YYYY");
-    const formattedPaymentDue = dayjs(paymentDue).format("DD MMM YYYY");
 
     return (
-        <div className="bg-[#1E2139] rounded-lg p-6 flex justify-between">
+        <div className="bg-[#1E2139] rounded-lg p-6 flex justify-between cursor-pointer">
             <div>
                 <p className="mb-6 text-[#7E88C3] text-sm">#<span className="text-white">{id}</span></p>
                 <p className="mb-2 text-[#DFE3FA] text-sm">Due {formattedDate}</p>
@@ -35,6 +34,7 @@ const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
                         }
                     `}
                 >
+                    <span className="w-2 h-2 rounded-full bg-current" />
                     {status}    
                 </p>
             </div>

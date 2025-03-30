@@ -2,7 +2,7 @@ import React from "react";
 import { useInvoiceStore } from "../../context/InvoiceStore";
 import InvoiceHeader from "../../components/invoice/InvoiceHeader";
 import InvoiceCard from "../../components/invoice/InvoiceCard";
-
+import EmptyInvoices from "../../components/invoice/EmptyInvoices";
 
 const InvoiceList = () => {
     const invoices = useInvoiceStore((state) => state.invoices);
@@ -18,10 +18,7 @@ const InvoiceList = () => {
                     ))}
                 </div>
             ) : (
-                <div className="flex justify-center items-center h-[50vh]">
-                    <p className="text-[#888EB0]">No invoices yet</p>
-                    // imagen de no hay nada
-                </div>
+                <EmptyInvoices />
             )}
         </div>
     )
