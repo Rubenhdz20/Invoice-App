@@ -6,7 +6,6 @@ import EmptyInvoices from "../../components/invoice/EmptyInvoices";
 
 const InvoiceList = () => {
     const invoices = useInvoiceStore((state) => state.invoices);
-    console.log("invoice", invoices);
 
     return (
         <div className="bg-[#141625]">

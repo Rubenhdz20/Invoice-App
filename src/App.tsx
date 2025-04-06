@@ -3,7 +3,8 @@ import Header from './components/Header';
 import './index.css'
 import InvoiceList from './pages/invoices/InvoiceList';
 import React from "react";
-import InvoiceDetail from "./components/invoice/InvoiceDetail";
+import InvoiceDetail from "./pages/invoices/InvoiceDetail";
+
 function App() {
   return (
     <BrowserRouter>
