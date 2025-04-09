@@ -31,7 +31,7 @@ const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
             <div className="flex flex-col items-end justify-between">
                 <p className="mb-6 text-white text-md font-bold">{clientName}</p>
                 <p
-                    className={`inline-flex items-center w-24 h-10 gap-2 text-sm font-bold px-3 py-1 rounded-md 
+                    className={`inline-flex items-center justify-center w-24 h-10 gap-2 text-sm font-bold px-3 py-1 rounded-md 
                         ${
                         status === "Paid"
                             ? "bg-[#33D69F]/10 text-[#33D69F]"
