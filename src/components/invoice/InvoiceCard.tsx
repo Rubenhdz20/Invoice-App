@@ -14,7 +14,6 @@ interface Invoice {
 const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
     const { id, createdAt,clientName, total, status } = invoice;
     const navigate = useNavigate();
-
     const formattedDate = dayjs(createdAt).format("DD MMM YYYY");
 
     const handleCardClick = () => {

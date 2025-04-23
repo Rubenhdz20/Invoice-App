@@ -1,18 +1,34 @@
-import React from "react";
+import React, { use, useState } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useInvoiceStore } from "../../context/InvoiceStore";
 import NotFoundInvoice from "../../components/invoice/NotFoundInvoice";
 import GoBackButton from "../../components/buttons/GoBackButton";
+import ConfirmDeleteModal from "../../components/modals/ConfirmDeleteModal";
 import { formatCurrency } from "../../utils/formatCurrency";
 import dayjs from "dayjs";
 
+// [Layout] [Box Model] [Position] [Flex/Grid] [Size] [Typography] [Color] [Effects] [Other]
 
 const InvoiceDetail = () => {
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
+    const navigate = useNavigate();
     const invoices = useInvoiceStore((state) => state.invoices);
     const invoice = invoices.find((invoice) => invoice.id === id);
+    const deleteInvoice = useInvoiceStore((state) => state.deleteInvoice);
+    const [isModalOpen, setModalOpen] = useState(false);
     const formattedDate = dayjs(invoice?.createdAt).format("DD MMM YYYY");
     const formattedPaymentDue = dayjs(invoice?.paymentDue).format("DD MMM YYYY");
+    
+    const handleDeleteClick = () => setModalOpen(true);
+    const handleCancel = () => setModalOpen(false);
+    const handleEditClick = () => { navigate(`/edit-invoice/${id}`) };
+    const handleConfirm = () => {
+        deleteInvoice(id!);
+        setModalOpen(false);
+        navigate("/", { replace: true });
+    };
+
     if (!invoice) {
         return (
             <div className="bg-[#141625]">
@@ -23,8 +39,7 @@ const InvoiceDetail = () => {
     }
 
     return (
-        // Main Container
-        <div className="h-screen bg-[#141625]">
+        <div className="bg-[#141625]">
             <GoBackButton />
             {/* // Info Status  */}
             <div className="flex justify-center">
@@ -65,7 +80,7 @@ const InvoiceDetail = () => {
                             <p className="text-sm text-[#DFE3FA]">{invoice.senderAddress.country}</p>
                         </div>
                     </div>
-                    {/* Invoice Date, Payment Due, Send to */}
+                    {/* Invoice Date, Payment Due, Send to, Bill to*/}
                     <div className="flex justify-between mt-4">
                         <div className="flex flex-col gap-2">
                             <p className="text-sm text-white">Invoice Date</p>
@@ -85,26 +100,38 @@ const InvoiceDetail = () => {
                         </div>  
                     </div>
                     {/* Invoice Items and Prices */}
-                    <div className="w-full mt-6 bg-[#252945] p-4 rounded">
+                    <div className="w-full mt-6 bg-[#252945] rounded">
                         {invoice.items.map((item, index) => (
-                            <div key={index} className="flex justify-between items-center mb-2">
+                            <div key={index} className="flex justify-between items-center p-5">
                                 <div className="flex flex-col">
                                     <p className="text-white font-bold">{item.name}</p>
                                     <p className="text-gray-300">
-                                            {formatCurrency(item.quantity)} x {formatCurrency(item.price)}
+                                        {formatCurrency(item.quantity)} x {formatCurrency(item.price)}
                                     </p>
                                 </div>
                                 <p className="text-white font-bold">{formatCurrency(item.total)}</p>
                             </div>
                         ))}
                         {/* Invoice total */}
-                        <div className="w-full h-full flex items-center justify-between mt-4 bg-[#0C0E16] p-5 rounded">
+                        <div className="w-full flex items-center justify-between bg-[#0C0E16] p-5 rounded">
                             <p className="text-sm font-bold text-white">Amount Due</p>
                             <p className="text-white text-2xl font-bold">{formatCurrency(invoice.total)}</p>
                         </div>
                     </div>
                 </div>
             </div>
+            {/* // Edit, Delete, Mark as paid buttons */}
+            <div className="h-25 flex justify-center items-center mt-14 px-6 py-4 space-x-4 bg-[#1E2139] rounded-lg">
+                <button className="w-16 h-12 text-white bg-[#252945] rounded-3xl cursor-pointer hover:bg-white hover:text-[#7E88C3] transition" onClick={handleEditClick}>Edit</button>
+                <button className="w-20 h-12 text-white bg-[#EC5757] rounded-3xl cursor-pointer hover:bg-[#FF9797] transition" onClick={handleDeleteClick}>Delete</button>
+                <button className="w-36 h-12 text-white bg-[#7C5DFA] rounded-3xl cursor-pointer hover:bg-[#9277FF] transition">Mark as Paid</button>
+            </div>
+            <ConfirmDeleteModal
+                invoiceId={id!}
+                isOpen={isModalOpen}
+                onCancel={handleCancel}
+                onConfirm={handleConfirm}
+            />
         </div>
     )
 }   

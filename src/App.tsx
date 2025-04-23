@@ -4,6 +4,7 @@ import './index.css'
 import InvoiceList from './pages/invoices/InvoiceList';
 import React from "react";
 import InvoiceDetail from "./pages/invoices/InvoiceDetail";
+import EditInvoice from "./pages/forms/EditInvoice";
 
 function App() {
   return (
@@ -12,9 +13,9 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<InvoiceList/>} /> 
-          <Route path="/invoice/:id" element={<InvoiceDetail/>} /> // Invoice detail component
+          <Route path="/invoice/:id" element={<InvoiceDetail/>} />
           <Route path="/create-invoice" element={<div>About</div>} /> // Create Invoice component
-          <Route path="/edit-invoice/:id" element={<div>Contact</div>} /> // Edit Invoice component
+          <Route path="/edit-invoice/:id" element={<EditInvoice/>} /> 
           {/* <Route path="*" element={<div>404 Not Found</div>} /> // 404 component */}
         </Routes>
       </main>
