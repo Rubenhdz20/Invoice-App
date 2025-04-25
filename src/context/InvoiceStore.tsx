@@ -39,6 +39,7 @@ interface InvoiceStore {
     addInvoice: (invoice: Invoice) => void; // add a new invoice to the invoices array.
     updateInvoice: (invoice: Invoice) => void; // update an existing invoice in the invoices array.
     deleteInvoice: (id: string) => void; // delete an invoice from the invoices array.  
+    markAsPaid: (id: string) => void;
 };
 
 export const useInvoiceStore = create<InvoiceStore>((set) => ({
@@ -49,6 +50,12 @@ export const useInvoiceStore = create<InvoiceStore>((set) => ({
     // Add a new invoice to the array
     updateInvoice: (invoice) => set((state) => ({
         invoices: state.invoices.map((item) => (item.id === invoice.id ? invoice : item)),
+    })),
+    markAsPaid: (id: string) =>
+        set((state) => ({
+          invoices: state.invoices.map((item) =>
+            item.id === id ? { ...item, status: "Paid" } : item
+          ),
     })),
     // replace the invoice with the same id in the invoices array. 
     deleteInvoice: (id) => set((state) => ({

@@ -16,6 +16,7 @@ const InvoiceDetail = () => {
     const invoices = useInvoiceStore((state) => state.invoices);
     const invoice = invoices.find((invoice) => invoice.id === id);
     const deleteInvoice = useInvoiceStore((state) => state.deleteInvoice);
+    const markAsPaid = useInvoiceStore((s) => s.markAsPaid);
     const [isModalOpen, setModalOpen] = useState(false);
     const formattedDate = dayjs(invoice?.createdAt).format("DD MMM YYYY");
     const formattedPaymentDue = dayjs(invoice?.paymentDue).format("DD MMM YYYY");
@@ -23,10 +24,15 @@ const InvoiceDetail = () => {
     const handleDeleteClick = () => setModalOpen(true);
     const handleCancel = () => setModalOpen(false);
     const handleEditClick = () => { navigate(`/edit-invoice/${id}`) };
+
     const handleConfirm = () => {
         deleteInvoice(id!);
         setModalOpen(false);
         navigate("/", { replace: true });
+    };
+
+    const handleMarkAsPaid = () => {
+        markAsPaid(id!);
     };
 
     if (!invoice) {
@@ -124,7 +130,7 @@ const InvoiceDetail = () => {
             <div className="h-25 flex justify-center items-center mt-14 px-6 py-4 space-x-4 bg-[#1E2139] rounded-lg">
                 <button className="w-16 h-12 text-white bg-[#252945] rounded-3xl cursor-pointer hover:bg-white hover:text-[#7E88C3] transition" onClick={handleEditClick}>Edit</button>
                 <button className="w-20 h-12 text-white bg-[#EC5757] rounded-3xl cursor-pointer hover:bg-[#FF9797] transition" onClick={handleDeleteClick}>Delete</button>
-                <button className="w-36 h-12 text-white bg-[#7C5DFA] rounded-3xl cursor-pointer hover:bg-[#9277FF] transition">Mark as Paid</button>
+                <button className="w-36 h-12 text-white bg-[#7C5DFA] rounded-3xl cursor-pointer hover:bg-[#9277FF] transition" onClick={handleMarkAsPaid}>Mark as Paid</button>
             </div>
             <ConfirmDeleteModal
                 invoiceId={id!}
