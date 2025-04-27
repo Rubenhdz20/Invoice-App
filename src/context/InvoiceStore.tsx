@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 import invoicesData from "../data/data.json";
 
 interface Invoice {
@@ -39,29 +40,47 @@ interface InvoiceStore {
     addInvoice: (invoice: Invoice) => void; // add a new invoice to the invoices array.
     updateInvoice: (invoice: Invoice) => void; // update an existing invoice in the invoices array.
     deleteInvoice: (id: string) => void; // delete an invoice from the invoices array.  
-    markAsPaid: (id: string) => void;
+    togglePaid: (id: string) => void;
 };
 
-export const useInvoiceStore = create<InvoiceStore>((set) => ({
-    invoices: invoicesData,
-    setInvoices: (invoices) => set({ invoices }),
-    //  Replace the entire invoices array at once.
-    addInvoice: (invoice) => set((state) => ({ invoices: [...state.invoices, invoice] })),
-    // Add a new invoice to the array
-    updateInvoice: (invoice) => set((state) => ({
-        invoices: state.invoices.map((item) => (item.id === invoice.id ? invoice : item)),
-    })),
-    markAsPaid: (id: string) =>
-        set((state) => ({
-          invoices: state.invoices.map((item) =>
-            item.id === id ? { ...item, status: "Paid" } : item
-          ),
-    })),
-    // replace the invoice with the same id in the invoices array. 
-    deleteInvoice: (id) => set((state) => ({
-        invoices: state.invoices.filter((item) => item.id !== id),
-    })),
-}));
+export const useInvoiceStore = create<InvoiceStore>()(
+    persist(
+      (set, get) => ({
+        invoices: invoicesData,
+  
+        setInvoices: (invoices) => set({ invoices }),
+  
+        addInvoice: (invoice) =>
+          set((state) => ({ invoices: [...state.invoices, invoice] })
+        ),
+  
+        updateInvoice: (invoice) =>
+          set((state) => ({
+            invoices: state.invoices.map((item) =>
+              item.id === invoice.id ? invoice : item
+            ),
+        })),
+  
+        togglePaid: (id: string) =>
+          set((state) => ({
+            invoices: state.invoices.map((inv) => {
+              if (inv.id !== id) return inv;
+              const newStatus = inv.status === "Paid" ? "Pending" : "Paid";
+              return { ...inv, status: newStatus };
+            }),
+        })),
+  
+        deleteInvoice: (id: string) =>
+          set((state) => ({
+            invoices: state.invoices.filter((item) => item.id !== id),
+          })),
+      }),
+      {
+        name: "invoice-storage",          // key in localStorage
+        getStorage: () => localStorage,    // (optional) explicitly choose storage
+      }
+    )
+  );
 
 // create<InvoiceStore>((set) => ({ ... })): This call initializes your store with default state and actions.
 
