@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 
 const statuses: string[] = ["All", "Paid", "Pending", "Draft"];
@@ -11,9 +12,12 @@ const FilterDropdown = () => {
     }
 
     const toggleFilter = (status: string) => {
-        setSelectedFilters((prev) => 
-            prev.includes(status) ? prev.filter((filter) => filter !== status) : [...prev, status]
-        );
+        setSelectedFilters((prev) => {
+            if (prev.indexOf(status) >= 0) {
+                return prev.filter((filter) => filter !== status);
+            }
+            return [...prev, status];
+        });
     }
 
     return(

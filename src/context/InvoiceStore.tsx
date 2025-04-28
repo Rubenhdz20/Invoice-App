@@ -36,6 +36,9 @@ interface Invoice {
 // shape of the Zustand store.
 interface InvoiceStore {
     invoices: Invoice[];
+    filters: string[];
+    setFilters: (filters: string[]) => void;
+    toggleFilter: (status: string) => void;
     setInvoices: (invoices: Invoice[]) => void; // replace the entire invoices array.
     addInvoice: (invoice: Invoice) => void; // add a new invoice to the invoices array.
     updateInvoice: (invoice: Invoice) => void; // update an existing invoice in the invoices array.
@@ -47,6 +50,7 @@ export const useInvoiceStore = create<InvoiceStore>()(
     persist(
       (set, get) => ({
         invoices: invoicesData,
+        filters: ['All'],
   
         setInvoices: (invoices) => set({ invoices }),
   
@@ -73,11 +77,30 @@ export const useInvoiceStore = create<InvoiceStore>()(
         deleteInvoice: (id: string) =>
           set((state) => ({
             invoices: state.invoices.filter((item) => item.id !== id),
-          })),
+        })),
+
+        setFilters: (filters) => set({ filters }),
+        
+        toggleFilter: (status) => {
+          const { filters } = get();
+          let next: string[];
+          if (status === "All") {
+            next = ["All"];
+          } else {
+            const withoutAll = filters.filter((s) => s !== "All");
+            if (withoutAll.indexOf(status) >= 0) {
+              next = withoutAll.filter((s) => s !== status);
+            } else {
+              next = [...withoutAll, status];
+            }
+            if (next.length === 0) next = ["All"];
+          }
+          set({ filters: next });
+        },
       }),
       {
         name: "invoice-storage",          // key in localStorage
-        getStorage: () => localStorage,    // (optional) explicitly choose storage
+       // (optional) explicitly choose storage
       }
     )
   );
