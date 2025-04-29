@@ -35,21 +35,22 @@ interface Invoice {
 
 // shape of the Zustand store.
 interface InvoiceStore {
-    invoices: Invoice[];
-    filters: string[];
-    setFilters: (filters: string[]) => void;
-    toggleFilter: (status: string) => void;
-    setInvoices: (invoices: Invoice[]) => void; // replace the entire invoices array.
-    addInvoice: (invoice: Invoice) => void; // add a new invoice to the invoices array.
-    updateInvoice: (invoice: Invoice) => void; // update an existing invoice in the invoices array.
-    deleteInvoice: (id: string) => void; // delete an invoice from the invoices array.  
-    togglePaid: (id: string) => void;
+  invoices: Invoice[];
+  filters: string[];
+  setFilters: (filters: string[]) => void; // set the filters array.
+  setInvoices: (invoices: Invoice[]) => void; // replace the entire invoices array.
+  addInvoice: (invoice: Invoice) => void; // add a new invoice to the invoices array.
+  updateInvoice: (invoice: Invoice) => void; // update an existing invoice in the invoices array.
+  deleteInvoice: (id: string) => void; // delete an invoice from the invoices array.  
+  togglePaid: (id: string) => void; // toggle the status of an invoice between "Paid" and "Pending".
+  toggleFilter: (status: string) => void; // toggle a filter status on or off.
 };
 
 export const useInvoiceStore = create<InvoiceStore>()(
     persist(
       (set, get) => ({
         invoices: invoicesData,
+
         filters: ['All'],
   
         setInvoices: (invoices) => set({ invoices }),
@@ -81,29 +82,30 @@ export const useInvoiceStore = create<InvoiceStore>()(
 
         setFilters: (filters) => set({ filters }),
         
-        toggleFilter: (status) => {
-          const { filters } = get();
+        toggleFilter: (status: string) => {
+          const { filters } = get(); // get the current filters from the store
           let next: string[];
           if (status === "All") {
             next = ["All"];
           } else {
-            const withoutAll = filters.filter((s) => s !== "All");
-            if (withoutAll.indexOf(status) >= 0) {
+            const withoutAll = filters.filter((s) => s !== "All"); // we remove “All” from the current filters, because selecting any specific status should automatically unselect “All.”
+            if (withoutAll.includes(status)) { // If the array already contains that status, we remove it (turn it off).
               next = withoutAll.filter((s) => s !== status);
-            } else {
+            } else { // If the array does not contain that status, we add it (turn it on).
               next = [...withoutAll, status];
             }
             if (next.length === 0) next = ["All"];
           }
           set({ filters: next });
-        },
+        }
       }),
+
       {
         name: "invoice-storage",          // key in localStorage
-       // (optional) explicitly choose storage
+        // (optional) explicitly choose storage
       }
-    )
-  );
+  )
+);
 
 // create<InvoiceStore>((set) => ({ ... })): This call initializes your store with default state and actions.
 

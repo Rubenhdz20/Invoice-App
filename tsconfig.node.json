@@ -2,7 +2,12 @@
   "compilerOptions": {
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
     "target": "ES2022",
-    "lib": ["ES2023"],
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2016",
+      "ES2022"
+    ],
     "module": "ESNext",
     "skipLibCheck": true,
 
@@ -20,5 +25,9 @@
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true
   },
-  "include": ["vite.config.ts"]
+  "include": [
+    "src/**/*",
+    "vite.config.ts",
+    "vite-env.d.ts",
+  ]
 }

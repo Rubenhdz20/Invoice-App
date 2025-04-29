@@ -1,25 +1,18 @@
 import React from "react";
 import { useState } from "react";
+import { useInvoiceStore } from "../../context/InvoiceStore";
 
 const statuses: string[] = ["All", "Paid", "Pending", "Draft"];
 
 const FilterDropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
-    const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
+    const filters = useInvoiceStore((state) => state.filters);
+    const toggleFilter = useInvoiceStore((state) => state.toggleFilter);
 
     const toggleDropdown = () => {
         setIsOpen((prev) => !prev);
     }
-
-    const toggleFilter = (status: string) => {
-        setSelectedFilters((prev) => {
-            if (prev.indexOf(status) >= 0) {
-                return prev.filter((filter) => filter !== status);
-            }
-            return [...prev, status];
-        });
-    }
-
+ 
     return(
         <div>
             <button
@@ -37,7 +30,7 @@ const FilterDropdown = () => {
                         >
                             <input 
                                 type="checkbox" 
-                                checked={selectedFilters.includes(status)}
+                                checked={filters.includes(status)}
                                 onChange={() => toggleFilter(status)}
                                 className="w-4 h-4 appearance-none border-2 border-[#1E2139] bg-[#1E2139] rounded-md checked:bg-[#7C5DFA] checked:border-[#7C5DFA] checked:bg-[url('src/assets/icon-check.svg')] focus:ring-0 cursor-pointer hover:border-[#7C5DFA] transition"
                             />

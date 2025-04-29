@@ -4,6 +4,12 @@
     "module": "commonjs",
     "moduleResolution": "node",
     "jsx": "react",
+    "lib": [
+      "DOM",
+      "DOM.Iterable",
+      "ES2016",
+      "ES2022"
+    ],
     "strict": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
