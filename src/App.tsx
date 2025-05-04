@@ -4,7 +4,7 @@ import './index.css'
 import InvoiceList from './pages/invoices/InvoiceList';
 import React from "react";
 import InvoiceDetail from "./pages/invoices/InvoiceDetail";
-import EditInvoice from "./pages/forms/EditInvoice.tsx";
+import EditInvoice from "./pages/forms/EditInvoice";
 
 function App() {
   return (

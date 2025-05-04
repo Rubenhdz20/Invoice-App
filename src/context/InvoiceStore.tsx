@@ -2,7 +2,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import invoicesData from "../data/data.json";
 
-interface Invoice {
+export interface Invoice {
     id: string;
     createdAt: string;
     paymentDue: string;
