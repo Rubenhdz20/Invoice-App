@@ -1,7 +1,7 @@
 import React, { use, useState } from "react";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { useInvoiceStore } from "../../context/InvoiceStore";
+import { useInvoiceStore } from "../../store/InvoiceStore";
 import NotFoundInvoice from "../../components/invoice/NotFoundInvoice";
 import GoBackButton from "../../components/buttons/GoBackButton";
 import ConfirmDeleteModal from "../../components/modals/ConfirmDeleteModal";

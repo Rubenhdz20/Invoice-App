@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useInvoiceStore } from "../../context/InvoiceStore";
+import { useInvoiceStore } from "../../store/InvoiceStore";
 
 const statuses: string[] = ["All", "Paid", "Pending", "Draft"];
 

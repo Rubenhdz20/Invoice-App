@@ -1,5 +1,5 @@
 import React from "react";
-import { useInvoiceStore } from "../../context/InvoiceStore";
+import { useInvoiceStore } from "../../store/InvoiceStore";
 import InvoiceHeader from "../../components/invoice/InvoiceHeader";
 import InvoiceCard from "../../components/invoice/InvoiceCard";
 import EmptyInvoices from "../../components/invoice/EmptyInvoices";
