@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useInvoiceStore } from "../../store/InvoiceStore";
 import NotFoundInvoice from "../../components/invoice/NotFoundInvoice";
-import GoBackButton from "../../components/buttons/GoBackButton";
+import GoBackButtonHome from "../../components/buttons/GoBackButtonHome";
 import ConfirmDeleteModal from "../../components/modals/ConfirmDeleteModal";
 import { formatCurrency } from "../../utils/formatCurrency";
 import dayjs from "dayjs";
@@ -39,7 +39,7 @@ const InvoiceDetail = () => {
     if (!invoice) {
         return (
             <div className="bg-[#141625]">
-                <GoBackButton />
+                <GoBackButtonHome />
                 <NotFoundInvoice />
             </div>
         );
@@ -47,7 +47,7 @@ const InvoiceDetail = () => {
 
     return (
         <div className="bg-[#141625]">
-            <GoBackButton />
+            <GoBackButtonHome />
             {/* // Info Status  */}
             <div className="flex justify-center">
                 <div className="w-3/4 h-24 flex justify-around items-center bg-[#1E2139] rounded-lg">

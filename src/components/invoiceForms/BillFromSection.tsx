@@ -17,7 +17,7 @@ const BillFromSection = ({ control, errors }: Props) => {
                     name="senderAddress.street"
                     defaultValue=""
                     rules={{ required: "Street is required" }}
-                    render={({ field, fieldState }) => (
+                    render={({ field }) => (
                         <div>
                             <label className={`block mb-1 text-gray-400 text-sm
                                 ${errors.senderAddress?.street ? "text-red-500" : "text-gray-400"}
@@ -40,7 +40,7 @@ const BillFromSection = ({ control, errors }: Props) => {
                     name="senderAddress.city"
                     defaultValue=""
                     rules={{ required: "City is required" }}
-                    render={({ field, fieldState }) => (
+                    render={({ field }) => (
                         <div className="mt-6 space-x-2">
                             <div>
                                 <label className={`block mb-1 text-gray-400 text-sm 
@@ -65,7 +65,7 @@ const BillFromSection = ({ control, errors }: Props) => {
                     name="senderAddress.postCode"
                     defaultValue=""
                     rules={{ required: "Post code is required" }}
-                    render={({ field, fieldState }) => (
+                    render={({ field }) => (
                     <div className="mt-6 space-x-2"> 
                         <div>
                             <label className={`block mb-1 text-gray-400 text-sm 
@@ -90,7 +90,7 @@ const BillFromSection = ({ control, errors }: Props) => {
                     name="senderAddress.country"
                     defaultValue=""
                     rules={{ required: "Country is required" }}
-                    render={({ field, fieldState }) => (
+                    render={({ field }) => (
                     <div className="mt-6 space-x-2"> 
                         <div>
                             <label className={`block mb-1 text-gray-400 text-sm 
