@@ -14,7 +14,7 @@ const InvoiceList = () => {
       : invoices.filter((inv) => filters.includes(inv.status));
 
     return (
-        <div className="bg-[#141625]">
+        <div className="bg-dark-2">
             <InvoiceHeader invoiceCount={invoices.length}/>
             {filtered.length > 0 ?(
                 <div className="h-full grid grid-cols-1 gap-4 p-6">

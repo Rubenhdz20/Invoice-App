@@ -1,6 +1,7 @@
 @import "tailwindcss";
 @tailwind utilities;
 
+
 :root {
   font-optical-sizing: auto;
   font-synthesis: none;
@@ -31,4 +32,19 @@ p {
 img, video, svg {
   height: auto;
   max-width: 100%;
+}
+
+@theme {
+  --color-stronggray: #888EB0;
+  --color-light-violet:  #9277FF;
+  --color-strong-blue':  #1E2139;
+  --color-light-blue:   #252945;
+  --color-light-gray:   #DFE3FA;
+  --color-strong-gray:  #888EB0;
+  --color-purple:       #7E88C3;
+  --color-dark-1:       #0C0E16;
+  --color-dark-2:       #141625;
+  --color-orange:       #EC5757;
+  --color-salmon:       #FF9797;
+  --color-white-custom: #F8F8FB;
 }
