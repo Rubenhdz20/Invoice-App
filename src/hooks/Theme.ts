@@ -1,4 +1,3 @@
-// src/store/useThemeStore.ts
 import { create } from 'zustand'
 
 type Theme = 'light'|'dark';
@@ -6,7 +5,7 @@ type Theme = 'light'|'dark';
 const useThemeStore = create<{
   theme: Theme
   toggle: () => void
-}>((set) => ({
+}> ((set) => ({
   // pick up saved preference or default to light
   theme: (localStorage.getItem('theme') as Theme) || 'light',
   toggle: () =>

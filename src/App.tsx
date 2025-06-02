@@ -1,7 +1,7 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { useEffect } from 'react'
-import useThemeStore  from "./store/Theme";
+import useThemeStore  from "./hooks/Theme";
 import './index.css'
 import Header from './components/Header';
 import InvoiceList from './pages/invoices/InvoiceList';
@@ -10,15 +10,17 @@ import EditInvoice from "./pages/invoices/EditInvoice";
 import CreateInvoice from "./pages/invoices/CreateInvoice";
 
 function App() {
-  const { theme, toggle } = useThemeStore()
+  const { theme, toggle } = useThemeStore();
 
-  // whenever theme changes, flip the `dark` class on <html>
   useEffect(() => {
-    const root = document.documentElement
-    if (theme === 'dark') root.classList.add('dark')
-    else             root.classList.remove('dark')
-  }, [theme])
+    const root = document.documentElement;
 
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }          
+  }, [theme])
 
   return (
     <BrowserRouter>

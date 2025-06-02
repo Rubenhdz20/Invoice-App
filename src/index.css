@@ -34,13 +34,17 @@ img, video, svg {
   max-width: 100%;
 }
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 @theme {
-  --color-stronggray: #888EB0;
   --color-light-violet:  #9277FF;
-  --color-strong-blue':  #1E2139;
+  --color-strong-blue:  #1E2139;
   --color-light-blue:   #252945;
   --color-light-gray:   #DFE3FA;
   --color-strong-gray:  #888EB0;
+  --color-medium-gray: #858BB2;
+  --color-card-gray: #F9FAFE;
+  --color-total-gray: #373B53;
   --color-purple:       #7E88C3;
   --color-dark-1:       #0C0E16;
   --color-dark-2:       #141625;

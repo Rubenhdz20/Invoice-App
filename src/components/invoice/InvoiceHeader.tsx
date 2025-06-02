@@ -8,10 +8,10 @@ type InvoiceHeaderProps = {
 
 const InvoiceHeader: React.FC<InvoiceHeaderProps> = ({ invoiceCount }) => {
     return (
-        <div className="flex justify-between items-center p-6 bg-[#141625] text-white">
+        <div className="flex justify-between items-center p-6 bg-white-custom dark:bg-dark-2 dark:text-white-custom">
             <div>
-                <h1 className="text-2xl font-bold text-white">Invoices</h1>
-                <p className="text-[#DFE3FA]">{invoiceCount} invoices</p>
+                <h1 className="text-2xl font-bold text-dark-1 dark:text-white">Invoices</h1>
+                <p className="text-strong-gray dark:text-white-custom">{invoiceCount} invoices</p>
             </div>
             <FilterDropdown />
             <NewInvoiceButton />

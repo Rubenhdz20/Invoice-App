@@ -21,14 +21,14 @@ const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
     }
 
     return (
-        <div className="bg-[#1E2139] rounded-lg p-6 flex justify-between cursor-pointer" onClick={handleCardClick}>
+        <div className="flex justify-between p-6 bg-white dark:bg-strong-blue rounded-lg cursor-pointer" onClick={handleCardClick}>
             <div>
-                <p className="mb-6 text-[#7E88C3] text-sm">#<span className="text-white">{id}</span></p>
-                <p className="mb-2 text-[#DFE3FA] text-sm">Due {formattedDate}</p>
-                <p className="text-white text-md font-bold">{formatCurrency(total)}</p>
+                <p className="mb-6 text-[#7E88C3] text-sm">#<span className="text-dark-1 font-bold dark:text-white">{id}</span></p>
+                <p className="mb-2 text-medium-gray dark:text-light-gray text-sm">Due {formattedDate}</p>
+                <p className="text-dark-1 dark:text-light-gray text-md font-bold">{formatCurrency(total)}</p>
             </div>
             <div className="flex flex-col items-end justify-between">
-                <p className="mb-6 text-white text-md font-bold">{clientName}</p>
+                <p className="mb-6 text-medium-gray dark:text-white text-md font-medium">{clientName}</p>
                 <p
                     className={`inline-flex items-center justify-center w-24 h-10 gap-2 text-sm font-bold px-3 py-1 rounded-md 
                         ${
