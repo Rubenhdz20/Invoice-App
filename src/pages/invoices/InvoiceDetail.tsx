@@ -32,10 +32,6 @@ const InvoiceDetail = () => {
         navigate("/", { replace: true });
     };
 
-    // const handleMarkAsPaid = () => {
-    //     markAsPaid(id!);
-    // };
-
     if (!invoice) {
         return (
             <div className="bg-dark-2">

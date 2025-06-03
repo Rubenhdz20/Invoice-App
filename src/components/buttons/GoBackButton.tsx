@@ -7,7 +7,7 @@ const GoBackButton = () => {
     return (
         <div className="flex items-baseline gap-2 p-5 cursor-pointer" onClick={() => navigate(-1)}>
               <img src={ArrowLeft} alt="arrow left" className="mr-2"/>
-              <button className="text-white cursor-pointer">
+              <button className="dark:text-white cursor-pointer font-bold">
                 Go back
               </button>
         </div>

@@ -78,15 +78,15 @@ const EditInvoice: React.FC = () => {
     
     return(
         <>
-            <form id="edit-invoice-form" onSubmit={handleSubmit(onSubmit)} className="min-h-screen p-6 pb-20 space-y-6 bg-[#141625]">
+            <form id="edit-invoice-form" onSubmit={handleSubmit(onSubmit)} className="min-h-screen p-6 pb-20 space-y-6 dark:bg-dark-2">
                 <GoBackButton/>
-                <h1 className="text-2xl font-bold text-white">Edit <span className="text-[#777F98]">#</span>{invoice.id}</h1>
+                <h1 className="text-2xl font-bold dark:text-white">Edit <span className="text-[#777F98]">#</span>{invoice.id}</h1>
                 <BillFromSection control={control} errors={errors} />
                 <BillToSection register={register} errors={errors} />
                 <DateTermsSection register={register} errors={errors} />
                 <ItemsSection control={control} register={register} errors={errors} />
             </form>
-            <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-[#1E2139]">
+            <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-white dark:bg-[#1E2139]">
                     <button
                         type="button"
                         onClick={() => navigate(-1)}
