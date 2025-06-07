@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
@@ -72,28 +72,28 @@ const CreateInvoice: React.FC = () => {
 
     return (
             <> 
-                <form id="edit-invoice-form" onSubmit={handleSubmit(onSubmit)}  className="min-h-screen p-6 pb-20 space-y-6 bg-[#141625]">
+                <form id="edit-invoice-form" onSubmit={handleSubmit(onSubmit)}  className="min-h-screen p-6 pb-20 space-y-6 dark:bg-dark-2">
                     <GoBackButton/>
-                    <h1 className="text-2xl font-bold text-white">Create a new invoice</h1>
+                    <h1 className="text-2xl font-bold dark:text-white">New Invoice</h1>
                     <BillFromSection  control={control} errors={errors} />
                     <BillToSection    register={register} errors={errors} />
                     <DateTermsSection register={register} errors={errors} />
                     <ItemsSection     control={control} register={register} errors={errors} />
                 </form>
-                <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-[#1E2139]">
+                <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-white-custom dark:bg-strong-blue">
                     <button
                         type="button"
                         onClick={() => navigate(-1)}
-                        className="w-16 h-12 text-white bg-[#252945] rounded-3xl cursor-pointer hover:bg-white hover:text-[#7E88C3] transition"
+                        className="w-16 h-12 text-purple dark:text-white bg-card-gray dark:bg-light-blue rounded-3xl hover:bg-light-gray dark:hover:bg-white hover:text-[#7E88C3] cursor-pointer transition"
                     >
-                        Cancel
+                        Discard
                     </button>
                     <button
                         type="submit"
                         form="edit-invoice-form"
                         className="w-36 h-12 text-white bg-[#7C5DFA] rounded-3xl cursor-pointer hover:bg-[#9277FF] transition"
                     >
-                        Save
+                        Save & Send
                     </button>
             </footer>
             </>

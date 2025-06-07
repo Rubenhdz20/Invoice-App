@@ -6,8 +6,8 @@ import './index.css'
 import Header from './components/Header';
 import InvoiceList from './pages/invoices/InvoiceList';
 import InvoiceDetail from "./pages/invoices/InvoiceDetail";
-import EditInvoice from "./pages/invoices/EditInvoice";
-import CreateInvoice from "./pages/invoices/CreateInvoice";
+import EditInvoice from "./pages/forms/EditInvoice";
+import CreateInvoice from "./pages/forms/CreateInvoice";
 
 function App() {
   const { theme, toggle } = useThemeStore();

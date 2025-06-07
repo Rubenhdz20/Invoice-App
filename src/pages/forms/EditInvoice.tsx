@@ -86,11 +86,11 @@ const EditInvoice: React.FC = () => {
                 <DateTermsSection register={register} errors={errors} />
                 <ItemsSection control={control} register={register} errors={errors} />
             </form>
-            <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-white dark:bg-[#1E2139]">
+            <footer className="flex justify-center items-center px-6 py-4 space-x-4 bg-white-custom dark:bg-strong-blue">
                     <button
                         type="button"
                         onClick={() => navigate(-1)}
-                        className="w-16 h-12 text-white bg-[#252945] rounded-3xl cursor-pointer hover:bg-white hover:text-[#7E88C3] transition"
+                        className="w-16 h-12 text-purple dark:text-white bg-card-gray dark:bg-light-blue rounded-3xl hover:bg-light-gray dark:hover:bg-white hover:text-[#7E88C3] cursor-pointer transition"
                     >
                         Cancel
                     </button>

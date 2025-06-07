@@ -1,6 +1,6 @@
 import React from "react";
 import { Control, Controller, FieldErrors } from 'react-hook-form'
-import { InvoiceFormValues } from '../../pages/invoices/EditInvoice'
+import { InvoiceFormValues } from '../../pages/forms/EditInvoice'
 
 interface Props {
   control: Control<InvoiceFormValues>
@@ -19,17 +19,17 @@ const BillFromSection = ({ control, errors }: Props) => {
                     rules={{ required: "Street is required" }}
                     render={({ field }) => (
                         <div>
-                            <label className={`block mb-1 text-gray-400 text-sm
+                            <label className={`block mb-1 text-purple dark:text-gray-400 text-sm font-medium
                                 ${errors.senderAddress?.street ? "text-red-500" : "text-gray-400"}
                             `}>
                                 Street Address
                             </label>
                             <input
                                 {...field}
-                                className={`w-full px-6 py-5 text-md bg-[#1E2139] text-white font-bold rounded border-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]
+                                className={`w-full px-6 py-5 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50
                                 ${errors.senderAddress?.street 
                                     ? "border-red-500 focus:border-red-500 focus:ring-red-500/40"
-                                    : "border-transparent focus:border-[#7C5DFA] focus:ring-[#7C5DFA]/40"
+                                    : "dark:border-transparent focus:border-purple focus:ring-purple/40"
                                 }`}
                             />
                         </div>
@@ -43,17 +43,17 @@ const BillFromSection = ({ control, errors }: Props) => {
                     render={({ field }) => (
                         <div className="mt-6 space-x-2">
                             <div>
-                                <label className={`block mb-1 text-gray-400 text-sm 
+                                <label className={`block mb-1 text-purple dark:text-gray-400 text-sm font-medium
                                     ${errors.senderAddress?.city ? "text-red-500" : "text-gray-400"}`}
                                 >
                                     City
                                 </label>
                                 <input
                                     {...field}
-                                    className={`w-full px-6 py-5 text-md bg-[#1E2139] text-white font-bold rounded border-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]
+                                    className={`w-full px-6 py-5 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50
                                     ${errors.senderAddress?.street 
                                         ? "border-red-500 focus:border-red-500 focus:ring-red-500/40"
-                                        : "border-transparent focus:border-[#7C5DFA] focus:ring-[#7C5DFA]/40"}`
+                                        : "dark:border-transparent focus:border-purple focus:ring-purple/40"}`
                                     }
                                 />
                             </div>
@@ -68,17 +68,17 @@ const BillFromSection = ({ control, errors }: Props) => {
                     render={({ field }) => (
                     <div className="mt-6 space-x-2"> 
                         <div>
-                            <label className={`block mb-1 text-gray-400 text-sm 
+                            <label className={`block mb-1 text-purple dark:text-gray-400 text-sm font-medium
                                     ${errors.senderAddress?.postCode ? "text-red-500" : "text-gray-400"}`}
                                 >
                                 Post Code
                             </label>
                             <input
                                     {...field}
-                                    className={`w-full px-6 py-5 text-md bg-[#1E2139] text-white font-bold rounded border-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]
+                                    className={`w-full px-6 py-5 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50
                                     ${errors.senderAddress?.postCode
                                         ? "border-red-500 focus:border-red-500 focus:ring-red-500/40"
-                                        : "border-transparent focus:border-[#7C5DFA] focus:ring-[#7C5DFA]/40"}`
+                                        : "dark:border-transparent focus:border-purple focus:ring-purple/40"}`
                                     }
                                 />
                         </div>
@@ -93,17 +93,17 @@ const BillFromSection = ({ control, errors }: Props) => {
                     render={({ field }) => (
                     <div className="mt-6 space-x-2"> 
                         <div>
-                            <label className={`block mb-1 text-gray-400 text-sm 
+                            <label className={`block mb-1 text-purple dark:text-gray-400 text-sm font-medium
                                     ${errors.senderAddress?.country ? "text-red-500" : "text-gray-400"}`}
                                 >
                                 Country
                             </label>
                             <input
                                 {...field}
-                                className={`w-full px-6 py-5 text-md bg-[#1E2139] text-white font-bold rounded border-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]
+                                className={`w-full px-6 py-5 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50
                                 ${errors.senderAddress?.country
                                     ? "border-red-500 focus:border-red-500 focus:ring-red-500/40"
-                                    : "border-transparent focus:border-[#7C5DFA] focus:ring-[#7C5DFA]/40"}`
+                                    : "dark:border-transparent focus:border-purple focus:ring-purple/40"}`
                                 }
                             />
                         </div>

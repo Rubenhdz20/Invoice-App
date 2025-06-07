@@ -1,6 +1,6 @@
 import React from 'react'
 import { Control, useFieldArray, useWatch, UseFormRegister, FieldErrors } from 'react-hook-form'
-import { InvoiceFormValues } from '../../pages/invoices/EditInvoice'
+import { InvoiceFormValues } from '../../pages/forms/EditInvoice'
 import { formatCurrency } from '../../utils/formatCurrency'
 
 interface Props {
@@ -30,7 +30,7 @@ const ItemsSection = ({ control, register, errors }: Props) => {
     return (
         <>
             <section className="space-y-4">
-                <h2 className="text-gray-400 text-lg font-semibold">Item List</h2>
+                <h2 className="text-[#777F98] text-lg font-bold">Item List</h2>
                 {fields.map((field, index) => {
                     const { quantity = 0, price = 0 } = watchedItems[index] ?? {};
                     const total = quantity * price;
@@ -39,17 +39,17 @@ const ItemsSection = ({ control, register, errors }: Props) => {
                         <div key={field.id} className="flex flex-col gap-2">
                             {/* Item Name */}
                             <div className="mb-6">
-                                <label className={`block mb-1 text-sm font-medium ${
+                                <label className={`block mb-1 mt-6 text-purple text-sm font-medium dark:text-gray-400 ${
                                     errors.items?.[index]?.name ? "text-red-500" : "text-gray-400"
                                     }`}>
                                         Item Name
                                 </label>
                                 <input
                                     {...register(`items.${index}.name` as const, { required: true })}
-                                    className={`w-full px-6 py-5 text-md bg-[#1E2139] text-white font-bold rounded border-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]
+                                    className={`w-full px-6 py-5 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 
                                     ${errors.items?.[index]?.name
                                         ? "border-red-500 focus:border-red-500 focus:ring-red-500/40"
-                                        : "border-transparent focus:border-[#7C5DFA] focus:ring-[#7C5DFA]/40"
+                                        : "dark:border-transparent focus:border-purple focus:ring-purple/40"
                                     }`}
                                 />
                             </div>
@@ -58,19 +58,19 @@ const ItemsSection = ({ control, register, errors }: Props) => {
                             <div className="flex items-center justify-center space-x-4">
                                 {/* Qty */}
                                 <div>
-                                    <label className="block text-gray-400 text-sm">Qty.</label>
+                                    <label className="block text-purple text-sm font-medium dark:text-gray-400">Qty.</label>
                                     <input
                                         type="number"
                                         {...register(`items.${index}.quantity` as const, {
                                         valueAsNumber: true,
                                         required: true,
                                         })}
-                                        className="w-24 px-4 py-2 text-md bg-[#1E2139] text-white font-bold roundedborder-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA"
+                                        className="w-24 px-4 py-2 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:border-transparent dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50"
                                     />
                                 </div>
                                 {/* Price */}
                                 <div>
-                                    <label className="block text-gray-400 text-sm">Price</label>
+                                    <label className="block text-purple text-sm font-medium dark:text-gray-400">Price</label>
                                     <input
                                         type="number"
                                         step="0.01"
@@ -78,16 +78,16 @@ const ItemsSection = ({ control, register, errors }: Props) => {
                                         valueAsNumber: true,
                                         required: true,
                                         })}
-                                        className="w-28 px-4 py-2 text-md bg-[#1E2139] text-white font-bold roundedborder-2 border-transparent focus:border-[#252945] focus:ring-2 focus:ring[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA"
+                                        className="w-24 px-4 py-2 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:border-transparent dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50"
                                     />
                                 </div>
-                                    {/* Total (read-only) */}
+                                {/* Price */}
                                 <div>
-                                    <label className="block text-gray-400 text-sm">Total</label>
+                                    <label className="block text-purple text-sm font-medium dark:text-gray-400">Total</label>
                                     <input
                                         readOnly
                                         value={formatCurrency(total)}
-                                        className="w-28 p-2 bg-[#1E2139] rounded text-white border-transparent focus:border-[#252945] focus:ring-2 focus:ring[#252945]/50 outline-none transition focus:placeholder-opacity-50 caret-[#7C5DFA]"
+                                        className="w-24 px-4 py-2 text-md dark:bg-strong-blue dark:text-white font-bold rounded border-2 border-light-gray dark:border-transparent dark:focus:border-[#252945] focus:ring-2 dark:focus:ring-[#252945]/50 outline-none transition focus:placeholder-opacity-50"
                                     />
                                 </div>
                                 {/* Remove button */}
@@ -106,7 +106,7 @@ const ItemsSection = ({ control, register, errors }: Props) => {
                 <button
                     type="button"
                     onClick={() => append({ name: "", quantity: 1, price: 0, total: 0 })}
-                    className="w-full px-6 py-3 text-md bg-[#1E2139] text-white font-bold rounded-full cursor-pointer border-2 border-transparent hover:bg-white hover:text-[#7E88C3] transition"
+                    className="w-full px-6 py-3 text-md bg-cancel-gray dark:bg-strong-blue text-purple dark:text-white font-bold rounded-full cursor-pointer border-2 border-transparent hover:bg-light-gray dark:hover:bg-white hover:text-[#7E88C3] transition"
                 >
                     + Add New Item
                 </button>
