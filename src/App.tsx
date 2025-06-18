@@ -28,9 +28,12 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<InvoiceList/>} /> 
-          <Route path="/invoice/:id" element={<InvoiceDetail/>} />
+          <Route
+            path="/invoice/:id"
+            element={<InvoiceDetail />}
+          />
           <Route path="/create-invoice" element={<CreateInvoice/>} />
-          <Route path="/edit-invoice/:id" element={<EditInvoice/>} /> 
+          <Route path="/edit-invoice/:id" element={<EditInvoice/>} />
           {/* <Route path="*" element={<div>404 Not Found</div>} /> // 404 component */}
         </Routes>
       </main>

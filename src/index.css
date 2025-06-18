@@ -13,6 +13,7 @@
 * {
   box-sizing: border-box;
   overflow-x: hidden;
+  scrollbar-width: none;
 }
 
 body {
@@ -32,6 +33,12 @@ p {
 img, video, svg {
   height: auto;
   max-width: 100%;
+}
+
+.edit-panel {
+  overflow-y: auto;                   /* only vertical scroll */
+  -webkit-overflow-scrolling: touch;  /* momentum on iOS/Safari */
+  overscroll-behavior: contain;       /* don’t trigger parent scroll */
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
