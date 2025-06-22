@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { useInvoiceStore } from "../../store/InvoiceStore";
+import ArrowDown from "../../assets/icon-arrow-down.svg";
+import ArrowUp from "../../assets/Path 2.svg";
 
 const statuses: string[] = ["All", "Paid", "Pending", "Draft"];
 
@@ -22,7 +24,7 @@ const FilterDropdown = () => {
                     <span className="hidden md:inline">
                         Filter by Status
                     </span>
-                    {isOpen ? <img src="src/assets/Path 2.svg" alt="arrow down" /> : <img src="src/assets/icon-arrow-down.svg" alt="arrow up" />}
+                    {isOpen ? <img src={ArrowDown} alt="arrow down" /> : <img src={ArrowUp} alt="arrow up" />}
             </button>
             {isOpen && (
                 <div className="absolute mt-2 w-auto bg-white dark:bg-light-blue text-dark-1 dark:text-white rounded-lg shadow-lg p-3 z-50">
