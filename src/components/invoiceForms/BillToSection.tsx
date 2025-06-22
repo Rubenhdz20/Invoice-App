@@ -1,6 +1,6 @@
 import React from 'react'
 import { UseFormRegister, FieldErrors } from 'react-hook-form'
-import { InvoiceFormValues } from '../../pages/forms/EditInvoice'
+import { InvoiceFormValues } from "../../pages/forms/CreateInvoice"; 
 
 interface Props {
   register: UseFormRegister<InvoiceFormValues>
@@ -61,7 +61,7 @@ const BillToSection = ({ register, errors }: Props) => {
                         }`}
                     />
                 </div>
-                <div className="flex mt-6 space-x-2">
+                <div className="flex mt-6 space-x-2 md:grid md:grid-cols-3 md:gap-4 space-y-6 md:space-y-0">
                     <div>
                         <label className={`block mb-1 text-purple text-sm font-medium dark:text-gray-400 ${
                             errors.clientAddress?.city ? "text-red-500" : "text-gray-400"
@@ -93,8 +93,7 @@ const BillToSection = ({ register, errors }: Props) => {
                             }`}
                         />
                     </div>
-                </div>
-                <div>
+                     <div>
                     <label className={`block mb-1 text-purple text-sm font-medium dark:text-gray-400 ${
                         errors.clientAddress?.country ? "text-red-500" : "text-gray-400"
                         }`}>
@@ -109,6 +108,7 @@ const BillToSection = ({ register, errors }: Props) => {
                         }`}
                     />
                 </div>  
+                </div>
             </section>
         </>
     )

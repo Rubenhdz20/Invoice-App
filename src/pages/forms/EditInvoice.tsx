@@ -113,7 +113,6 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
       
       {isTabletUp && ( // Tablet/Desktop specific placement and wrapper for h1 & back button
          <div className="flex items-center justify-between">
-            <GoBackButton />
             <h1 className="text-2xl font-bold dark:text-white">
               Edit <span className="text-purple">#{invoice.id}</span>
             </h1>
@@ -125,19 +124,19 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
       <BillFromSection control={control} errors={errors} />
       <BillToSection register={register} errors={errors} />
       <DateTermsSection register={register} errors={errors} />
-      <ItemsSection control={control} register={register} errors={errors} />rubson42
+      <ItemsSection control={control} register={register} errors={errors} />
       <footer className="sticky bottom-0 bg-white dark:bg-dark-2 p-6 flex justify-end space-x-4">
         <button
           type="button"
           onClick={handleCancel}
-          className="px-4 py-2 bg-card-gray dark:bg-light-blue rounded"
+          className="px-4 py-2 bg-card-gray text-strong-gray dark:text-white-custom dark:bg-light-blue font-bold rounded-2xl cursor-pointer"
         >
           Cancel
         </button>
         <button
           type="submit"
           form={formId} // IMPORTANT: Use the single formId here
-          className="px-6 py-2 bg-strong-violet rounded text-white"
+          className="px-6 py-2 bg-strong-violet rounded-2xl text-white bg-strong-purple dark:bg-purple hover:bg-purple dark:hover:bg-light-blue transition-colors duration-200 cursor-pointer "
           // No need for onClick={handleSubmit(onSubmit)} if type="submit" and form ID is correct
           // The form's onSubmit handler will take care of it
         >
@@ -148,9 +147,10 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   );
 
   // Conditional rendering of the Animated Panel vs. full-screen form
+
   if (isTabletUp) {
     return (
-      <AnimatePresence>
+     <AnimatePresence>
         {/* BACKDROP */}
         <motion.div
           key="edit-backdrop"
@@ -166,7 +166,7 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
         {/* SLIDING PANEL */}
         <motion.div
           key="edit-panel"
-          className="fixed inset-y-0 left-0 w-full max-w-md overflow-auto bg-white dark:bg-dark-2 z-20"
+          className="fixed inset-y-0 left-0 w-full max-w-md md:max-w-xl lg:max-w-2xl overflow-auto bg-white dark:bg-dark-2 z-20"
           variants={panelVariants}
           initial="hidden"
           animate="visible"
@@ -182,7 +182,7 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   } else {
     // Mobile mode: render form full-screen, no animation
     return (
-      <form id={formId} onSubmit={handleSubmit(onSubmit)} className="min-h-screen p-6 space-y-6">
+      <form id={formId} onSubmit={handleSubmit(onSubmit)} className="min-h-screen p-6 space-y-6 bg:dark-2 bg-white dark:bg-dark-2">
         {formContent} {/* Render the shared content here */}
       </form>
     );

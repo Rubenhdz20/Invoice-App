@@ -14,7 +14,6 @@ function App() {
 
   useEffect(() => {
     const root = document.documentElement;
-
     if (theme === 'dark') {
       root.classList.add('dark');
     } else {
@@ -24,19 +23,39 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Header onToggleTheme={toggle} current={theme}/>
-      <main>
-        <Routes>
-          <Route path="/" element={<InvoiceList/>} /> 
-          <Route
-            path="/invoice/:id"
-            element={<InvoiceDetail />}
-          />
-          <Route path="/create-invoice" element={<CreateInvoice/>} />
-          <Route path="/edit-invoice/:id" element={<EditInvoice/>} />
-          {/* <Route path="*" element={<div>404 Not Found</div>} /> // 404 component */}
-        </Routes>
-      </main>
+      <div className="flex flex-col lg:flex-row min-h-screen lg:w-screen lg:h-screen">
+        <Header onToggleTheme={toggle} current={theme}/>
+        <main className="flex-1 bg-white-custom dark:bg-dark-2">
+          <Routes>
+            <Route path="/" element={<InvoiceList/>} /> 
+            <Route path="/invoice/:id" element={<InvoiceDetail invoice={{
+              id: "",
+              createdAt: "",
+              paymentDue: "",
+              clientEmail: "",
+              clientName: "",
+              clientAddress: {
+                street: "",
+                city: "",
+                postCode: "",
+                country: ""
+              },
+              senderAddress: {
+                street: "",
+                city: "",
+                postCode: "",
+                country: ""
+              },
+              items: [],
+              total: 0,
+              status: "",
+              description: ""
+            }} />} />
+            <Route path="/create-invoice" element={<CreateInvoice/>} />
+            <Route path="/edit-invoice/:id" element={<EditInvoice onCancel={() => {}} onSave={() => {}} />} />
+          </Routes>
+        </main>
+      </div>
     </BrowserRouter>
   )
 }

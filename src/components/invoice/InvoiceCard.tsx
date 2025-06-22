@@ -23,7 +23,7 @@ const InvoiceCard: React.FC<{ invoice: Invoice }> = ({ invoice }) => {
   return (
     <div
       onClick={navigateToInvoice}
-      className="grid grid-cols-[1fr_auto] p-5 gap-y-2 bg-white dark:bg-strong-blue rounded-lg cursor-pointer md:grid-cols-[1.2fr_1fr_1fr_1fr_auto_auto] md:gap-y-0 md:items-center"
+      className="grid grid-cols-[1fr_auto] p-5 gap-y-2 bg-white dark:bg-strong-blue rounded-lg border-2 border-transparent cursor-pointer md:grid-cols-[1.2fr_1fr_1fr_1fr_auto_auto] md:gap-y-0 md:items-center hover:border-purple-400 transition-all duration-300"
     >
       <p className="text-sm text-medium-gray dark:text-light-gray md:mb-0">
         #<span className="font-bold text-dark-1 dark:text-white">{id}</span>

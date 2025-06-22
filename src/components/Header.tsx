@@ -13,18 +13,21 @@ interface Props {
 
 const Header: React.FC<Props> = ({ onToggleTheme, current }) => {
     return (
-        <header className="flex justify-between items-center bg-[#1E2139]">
+        <header className="flex justify-between items-center bg-strong-blue lg:flex-col lg:justify-between lg:items-center lg:w-20 lg:h-screen">
             <div>
                 <img src={LogoApp} alt="Invoice App Logo" />
             </div>
-            <div className="flex items-center gap-4 mr-5">
+            <div className="flex items-center gap-4 mr-5 lg:flex-col lg:gap-2 lg:mr-0">
                 <button onClick={onToggleTheme} className="p-2 cursor-pointer">
                     {current === 'light'
                         ? <img src={Moon}/>
                         : <img src={Sun}/>
                     }
                 </button>
-                <img src={BarSeparator} alt="Bar separator" />
+                <div className="lg:flex lg:flex-row lg:items-center">
+                    <img src={BarSeparator} alt="Bar separator" />
+                </div>
+                
                 <img src={ProfilePicture} alt="Profile Picture" className="w-8 h-8 rounded-full"/>
             </div>
         </header>

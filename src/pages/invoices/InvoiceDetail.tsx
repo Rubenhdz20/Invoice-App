@@ -109,14 +109,13 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = () => {
 
     // --- Main Component Render ---
     return (
-        <div className="min-h-screen bg-white-custom dark:bg-dark-2 pb-24 md:pb-0"> {/* Added padding-bottom for mobile footer spacing */}
+        <div className="min-h-screen bg-white-custom dark:bg-dark-2 pb-24 md:pb-0"> 
             <GoBackButtonHome />
-
             {/* --- Info Status Section (Consolidated) --- */}
             {/* This section now contains ALL status/action buttons,
                 their layout changes based on screen size using Tailwind utilities. */}
             <div className="flex justify-center mt-4 md:mt-10"> {/* Adjusted margin-top for mobile */}
-                <div className="w-11/12 md:w-3/4 p-4 md:p-6 flex flex-col md:flex-row items-center justify-between bg-white dark:bg-strong-blue rounded-lg shadow-sm">
+                <div className="w-full max-w-[730px] p-4 md:p-6 flex flex-col md:flex-row items-center justify-between bg-white dark:bg-strong-blue rounded-lg shadow-sm">
                     {/* Status Text and Badge */}
                     <div className="flex items-center justify-between w-full md:w-auto md:mb-0"> {/* Added w-full and mb for mobile layout */}
                         <p className="text-medium-gray dark:text-white font-bold mr-4">Status</p>
@@ -155,8 +154,8 @@ const InvoiceDetail: React.FC<InvoiceDetailProps> = () => {
             {/* --- Invoice Main Info (Consolidated) --- */}
             {/* The main content block using responsive grid for tablet/desktop */}
             <div className="mt-4 flex justify-center">
-                <div className="w-11/12 md:w-3/4 mt-6 p-6 bg-white dark:bg-strong-blue rounded-lg shadow-sm
-                        md:grid md:grid-cols-4 md:grid-rows-[auto_auto_1fr] md:gap-5 md:mb-15 md:mt-7"> {/* Adjusted w and p for mobile */}
+                <div className="w-full max-w-[730px] mt-6 p-6 bg-white dark:bg-strong-blue rounded-lg shadow-sm
+                  md:grid md:grid-cols-4 md:grid-rows-[auto_auto_1fr] md:gap-5 md:mb-15 md:mt-7"> {/* Adjusted w and p for mobile */}
                     {/* Invoice ID & Description */}
                     <div className="md:col-span-2 md:row-span-1 md:flex md:flex-col md:justify-start">
                         <p className="text-dark-1 dark:text-white font-bold mb-1">
