@@ -49,7 +49,6 @@ A full-featured Invoice Management Web Application built with React, TypeScript,
 
 ## 📂 Project Structure
 
-```bash
 src/
 ├── components/
 │   ├── Header
@@ -66,7 +65,7 @@ src/
 └── App.tsx
 
 
-📦 Installation
+## 📦 Installation
 
 1️⃣ Clone the repository:
 
@@ -83,16 +82,16 @@ npm run dev
 
 App runs at http://localhost:5173/
 
-🚧 Planned Future Improvements
+## 🚧 Planned Future Improvements
 	•	🔐 Add User Authentication (e.g. Firebase, Supabase)
 	•	✅ Full testing suite with Jest + React Testing Library
 
-🙋‍♂️ Author
+## 🙋‍♂️ Author
 
 Ruben Hernandez
 	•	GitHub: @Rubenhdz20
 
-🏁 Goal of the project
+## 🏁 Goal of the project
 
 This project was created to simulate a real-world frontend application with:
 	•	Pixel perfect UI
@@ -102,5 +101,3 @@ This project was created to simulate a real-world frontend application with:
 	•	State management
 	•	Animations
 	•	Future extensibility for full-stack capabilities
-
-⸻
