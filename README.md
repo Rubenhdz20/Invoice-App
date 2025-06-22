@@ -49,22 +49,7 @@ A full-featured Invoice Management Web Application built with React, TypeScript,
 
 ## 📂 Project Structure
 
-```
-src/
-├── components/
-│   ├── Header
-│   ├── InvoiceList
-│   ├── InvoiceDetail
-│   ├── CreateInvoice
-│   ├── EditInvoice
-│   ├── FilterDropdown
-│   └── Shared components (Buttons, Modals, etc.)
-├── hooks/
-├── store/
-├── utils/
-├── assets/ (icons, images)
-└── App.tsx
-```
+
 
 ## 📦 Installation
 
