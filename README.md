@@ -49,6 +49,7 @@ A full-featured Invoice Management Web Application built with React, TypeScript,
 
 ## 📂 Project Structure
 
+![Screenshot 2025-06-22 at 5 37 32 p m](https://github.com/user-attachments/assets/5b7d9f9f-3416-41db-a699-e623e1f175e6)
 
 
 ## 📦 Installation
