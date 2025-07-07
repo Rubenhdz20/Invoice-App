@@ -1,6 +1,6 @@
 import React from "react";
 import LogoApp from "../assets/logoapp.svg";
-import Point from "../assets/Combined Shape.svg";
+import { UserButton } from '@clerk/clerk-react'
 import BarSeparator from "../assets/Rectangle.svg";
 import ProfilePicture from "../assets/image-avatar.jpg";
 import Moon from "../assets/icon-moon.svg";
@@ -28,7 +28,14 @@ const Header: React.FC<Props> = ({ onToggleTheme, current }) => {
                     <img src={BarSeparator} alt="Bar separator" />
                 </div>
                 
-                <img src={ProfilePicture} alt="Profile Picture" className="w-8 h-8 rounded-full"/>
+                <UserButton
+                    afterSignOutUrl="/sign-in"
+                    appearance={{
+                        elements: {
+                            userButtonAvatarBox: "w-8 h-8"
+                        }
+                    }}
+                />
             </div>
         </header>
     );

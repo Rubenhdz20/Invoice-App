@@ -1,15 +1,29 @@
-import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useEffect } from 'react'
-import useThemeStore  from "./hooks/Theme";
-import './index.css'
-import Header from './components/Header';
-import InvoiceList from './pages/invoices/InvoiceList';
-import InvoiceDetail from "./pages/invoices/InvoiceDetail";
-import EditInvoice from "./pages/forms/EditInvoice";
-import CreateInvoice from "./pages/forms/CreateInvoice";
+// App.tsx
+import React, { useEffect } from 'react'
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Navigate,
+  Outlet
+} from 'react-router-dom'
+import {
+  SignedIn,
+  SignedOut,
+  RedirectToSignIn,
+  useAuth
+} from '@clerk/clerk-react'
+import useThemeStore from './hooks/Theme'
+import Header from './components/Header'
+import Welcome from './pages/Welcome'
+import SignInPage from './pages/SignInPage'
+import SignUpPage from './pages/SignUpPage'
+import InvoiceList from './pages/invoices/InvoiceList'
+import InvoiceDetail from './pages/invoices/InvoiceDetail'
+import CreateInvoice from './pages/forms/CreateInvoice'
+import EditInvoice from './pages/forms/EditInvoice'
 
-function App() {
+function ProtectedLayout() {
   const { theme, toggle } = useThemeStore();
 
   useEffect(() => {
@@ -20,44 +34,74 @@ function App() {
       root.classList.remove('dark');
     }          
   }, [theme])
-
+  
   return (
-    <BrowserRouter>
-      <div className="flex flex-col lg:flex-row min-h-screen lg:w-screen lg:h-screen">
+    <SignedIn>
+      <div className="flex flex-col lg:flex-row min-h-screen">
         <Header onToggleTheme={toggle} current={theme}/>
         <main className="flex-1 bg-white-custom dark:bg-dark-2">
-          <Routes>
-            <Route path="/" element={<InvoiceList/>} /> 
-            <Route path="/invoice/:id" element={<InvoiceDetail invoice={{
-              id: "",
-              createdAt: "",
-              paymentDue: "",
-              clientEmail: "",
-              clientName: "",
-              clientAddress: {
-                street: "",
-                city: "",
-                postCode: "",
-                country: ""
-              },
-              senderAddress: {
-                street: "",
-                city: "",
-                postCode: "",
-                country: ""
-              },
-              items: [],
-              total: 0,
-              status: "",
-              description: ""
-            }} />} />
-            <Route path="/create-invoice" element={<CreateInvoice/>} />
-            <Route path="/edit-invoice/:id" element={<EditInvoice onCancel={() => {}} onSave={() => {}} />} />
-          </Routes>
+          <Outlet/>
         </main>
       </div>
-    </BrowserRouter>
+    </SignedIn>
   )
 }
 
-export default App;
+function AuthRedirectLayout() {
+  return (
+    <SignedOut>
+      <Outlet/>
+    </SignedOut>
+  )
+}
+
+// Loading component while Clerk is initializing
+function LoadingScreen() {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-white-custom dark:bg-dark-2">
+      <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+    </div>
+  )
+}
+
+export default function App() {
+  const { isLoaded } = useAuth();
+
+  // Show loading screen while Clerk is initializing
+  if (!isLoaded) {
+    return <LoadingScreen />
+  }
+
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public / unauthenticated routes */}
+        <Route element={<AuthRedirectLayout/>}>
+          <Route path="/" element={<Welcome/>} />
+          <Route path="/sign-in/*" element={<SignInPage/>} />
+          <Route path="/sign-up/*" element={<SignUpPage/>} />
+        </Route>
+
+        {/* Protected routes */}
+        <Route element={<ProtectedLayout/>}>
+          <Route path="/invoices" element={<InvoiceList/>} />
+          <Route path="/invoice/:id" element={<InvoiceDetail/>} />
+          <Route path="/create-invoice" element={<CreateInvoice/>} />
+          <Route path="/edit-invoice/:id" element={<EditInvoice onCancel={()=>{}} onSave={()=>{}}/>} />
+        </Route>
+
+        {/* Catch-all route - redirect based on auth state */}
+        <Route path="*" element={
+          <>
+            <SignedIn>
+              <Navigate to="/invoices" replace />
+            </SignedIn>
+            <SignedOut>
+              <RedirectToSignIn />
+            </SignedOut>
+          </>
+        } />
+      </Routes>
+    </BrowserRouter>
+  )
+}

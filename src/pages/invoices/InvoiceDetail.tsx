@@ -27,33 +27,8 @@ const backdrop = {
 // --- Type Definitions ---
 // Keeping the InvoiceDetailProps type, though it's not strictly necessary here
 // as the invoice is fetched internally. Good for clarity if passed as a prop later.
-export interface InvoiceDetailProps {
-  invoice: {
-    id: string;
-    createdAt: string;
-    paymentDue: string;
-    clientEmail: string;
-    clientName: string;
-    clientAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    senderAddress: {
-      street: string;
-      city: string;
-      postCode: string;
-      country: string;
-    };
-    items: { name: string; quantity: number; price: number; total: number }[];
-    total: number;
-    status: string;
-    description: string;
-  };
-}
 
-const InvoiceDetail: React.FC<InvoiceDetailProps> = () => {
+const InvoiceDetail: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const navigate = useNavigate();
     const invoices = useInvoiceStore((state) => state.invoices);
