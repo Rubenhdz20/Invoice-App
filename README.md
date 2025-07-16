@@ -1,117 +1,90 @@
-# Frontend Mentor - Invoice app solution
+# Invoice App 💸
 
-This is a solution to the [Invoice app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/invoice-app-i7KaLTQjl). Frontend Mentor challenges help you improve your coding skills by building realistic projects. 
+A full-featured Invoice Management Web Application built with React, TypeScript, Vite and Tailwind CSS. This project allows users to create, edit, delete and manage invoices with a clean, responsive and beautiful interface. Fully deployed and live!
 
-## Table of contents
+---
 
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [What I learned](#what-i-learned)
-  - [Continued development](#continued-development)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
+## 🚀 Live Demo
 
-**Note: Delete this note and update the table of contents based on what sections you keep.**
+👉 https://invoiceappexpenses.netlify.app/
 
-## Overview
+---
 
-### The challenge
+## 📸 Preview
 
-Users should be able to:
+![Screenshot 2025-06-22 at 5 31 10 p m](https://github.com/user-attachments/assets/b67d011b-6d5c-4cf5-9b8d-536c71e97685)
 
-- View the optimal layout for the app depending on their device's screen size
-- See hover states for all interactive elements on the page
-- Create, read, update, and delete invoices
-- Receive form validations when trying to create/edit an invoice
-- Save draft invoices, and mark pending invoices as paid
-- Filter invoices by status (draft/pending/paid)
-- Toggle light and dark mode
-- **Bonus**: Keep track of any changes, even after refreshing the browser (`localStorage` could be used for this if you're not building out a full-stack app)
 
-### Screenshot
+---
 
-![](./screenshot.jpg)
+## ✨ Features
 
-Add a screenshot of your solution. The easiest way to do this is to use Firefox to view your project, right-click the page and select "Take a Screenshot". You can choose either a full-height screenshot or a cropped one based on how long the page is. If it's very long, it might be best to crop it.
+- Responsive Design (Mobile, Tablet, Desktop)
+- Create, Edit and Delete Invoices
+- Filter Invoices by Status (Draft, Pending, Paid)
+- Dark Mode / Light Mode toggle
+- Smooth animated sliding edit panel
+- State management with Zustand
+- Form management with React Hook Form
+- Local data persistence (for demo)
+- Fully deployed using Netlify
 
-Alternatively, you can use a tool like [FireShot](https://getfireshot.com/) to take the screenshot. FireShot has a free option, so you don't need to purchase it. 
+---
 
-Then crop/optimize/edit your image however you like, add it to your project, and update the file path in the image above.
+## 🛠 Tech Stack
 
-**Note: Delete this note and the paragraphs above when you add your screenshot. If you prefer not to add a screenshot, feel free to remove this entire section.**
+| Technology | Purpose |
+| ----------- | ------- |
+| **React** | UI Library |
+| **TypeScript** | Type Safety |
+| **Vite** | Build Tool |
+| **Tailwind CSS** | Styling |
+| **React Hook Form** | Form Handling |
+| **Zustand** | Global State Management |
+| **Framer Motion** | Animations |
+| **React Router** | Routing |
+| **Netlify** | Deployment |
 
-### Links
+---
 
-- Solution URL: [Add solution URL here](https://your-solution-url.com)
-- Live Site URL: [Add live site URL here](https://your-live-site-url.com)
+## 📂 Project Structure
 
-## My process
+![Screenshot 2025-06-22 at 5 37 32 p m](https://github.com/user-attachments/assets/5b7d9f9f-3416-41db-a699-e623e1f175e6)
 
-### Built with
 
-- Semantic HTML5 markup
-- CSS custom properties
-- Flexbox
-- CSS Grid
-- Mobile-first workflow
-- [React](https://reactjs.org/) - JS library
-- [Next.js](https://nextjs.org/) - React framework
-- [Styled Components](https://styled-components.com/) - For styles
+## 📦 Installation
 
-**Note: These are just examples. Delete this note and replace the list above with your own choices**
+1️⃣ Clone the repository:
 
-### What I learned
+git clone https://github.com/YOUR_USERNAME/Invoice-App.git
+cd Invoice-App
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
+2️⃣ Install dependencies:
 
-To see how you can add code snippets, see below:
+npm install
 
-```html
-<h1>Some HTML code I'm proud of</h1>
-```
-```css
-.proud-of-this-css {
-  color: papayawhip;
-}
-```
-```js
-const proudOfThisFunc = () => {
-  console.log('🎉')
-}
-```
+3️⃣ Start the development server:
 
-If you want more help with writing markdown, we'd recommend checking out [The Markdown Guide](https://www.markdownguide.org/) to learn more.
+npm run dev
 
-**Note: Delete this note and the content within this section and replace with your own learnings.**
+App runs at http://localhost:5173/
 
-### Continued development
+## 🚧 Planned Future Improvements
+	•	🔐 Add User Authentication (e.g. Firebase, Supabase)
+	•	✅ Full testing suite with Jest + React Testing Library
 
-Use this section to outline areas that you want to continue focusing on in future projects. These could be concepts you're still not completely comfortable with or techniques you found useful that you want to refine and perfect.
+## 🙋‍♂️ Author
 
-**Note: Delete this note and the content within this section and replace with your own plans for continued development.**
+Ruben Hernandez
+	•	GitHub: @Rubenhdz20
 
-### Useful resources
+## 🏁 Goal of the project
 
-- [Example resource 1](https://www.example.com) - This helped me for XYZ reason. I really liked this pattern and will use it going forward.
-- [Example resource 2](https://www.example.com) - This is an amazing article which helped me finally understand XYZ. I'd recommend it to anyone still learning this concept.
-
-**Note: Delete this note and replace the list above with resources that helped you during the challenge. These could come in handy for anyone viewing your solution or for yourself when you look back on this project in the future.**
-
-## Author
-
-- Website - [Add your name here](https://www.your-site.com)
-- Frontend Mentor - [@yourusername](https://www.frontendmentor.io/profile/yourusername)
-- Twitter - [@yourusername](https://www.twitter.com/yourusername)
-
-**Note: Delete this note and add/remove/edit lines above based on what links you'd like to share.**
-
-## Acknowledgments
-
-This is where you can give a hat tip to anyone who helped you out on this project. Perhaps you worked in a team or got some inspiration from someone else's solution. This is the perfect place to give them some credit.
-
-**Note: Delete this note and edit this section's content as necessary. If you completed this challenge by yourself, feel free to delete this section entirely.*
+This project was created to simulate a real-world frontend application with:
+	•	Pixel perfect UI
+	•	Fully responsive design
+	•	Component-based architecture
+	•	Reusable patterns
+	•	State management
+	•	Animations
+	•	Future extensibility for full-stack capabilities
