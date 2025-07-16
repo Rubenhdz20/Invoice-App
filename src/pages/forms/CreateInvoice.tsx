@@ -2,6 +2,7 @@ import React from 'react';
 import {  useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@clerk/clerk-react';
 import { useInvoiceStore, Invoice } from '../../store/InvoiceStore';
 import GoBackButton from "../../components/buttons/GoBackButton";
 import BillFromSection from "../../components/invoiceForms/BillFromSection";
@@ -13,7 +14,9 @@ export  type InvoiceFormValues = Omit<Invoice, 'id' | 'total'> & { status: Invoi
 
 const CreateInvoice: React.FC = () => {
     const navigate = useNavigate();
+    const { user } = useUser();
     const addInvoice = useInvoiceStore((s) => s.addInvoice);
+    const currentUserId = useInvoiceStore((s) => s.currentUserId);
 
     const {
         register,
@@ -49,26 +52,51 @@ const CreateInvoice: React.FC = () => {
         },
     });
 
-    const onSubmit = (data: InvoiceFormValues) => {
-        // Build a new items array where each item gets its computed total
-        const itemsWithTotals = data.items.map(item => ({
-            ...item,
-            total: item.quantity * item.price
-        }));
+    const onSubmit = (data: InvoiceFormValues) => {        
+        try {
+            // Check if user is set
+            if (!currentUserId) {
+                console.error('No current user ID found!');
+                alert('Error: User not found. Please try signing out and back in.');
+                return;
+            }
 
-        const id = uuidv4().slice(0, 8)  // pick first 8 chars of the hex string
+            // Build a new items array where each item gets its computed total
+            const itemsWithTotals = data.items.map(item => ({
+                ...item,
+                total: item.quantity * item.price
+            }));
 
-        // Create the new invoice object with a unique ID
-        const newInvoice = {
-            ...data,
-            id: id,
-            items: itemsWithTotals,
-            total: itemsWithTotals.reduce((acc, item) => acc + item.total, 0)
-        };
+            const id = uuidv4().slice(0, 8);
+            console.log('Generated invoice ID:', id);
 
-        addInvoice(newInvoice);
-        navigate('/');
+            // Create the new invoice object with a unique ID
+            const newInvoice = {
+                ...data,
+                id: id,
+                items: itemsWithTotals,
+                total: itemsWithTotals.reduce((acc, item) => acc + item.total, 0)
+            };
+            
+            addInvoice(newInvoice);
+            navigate('/invoices');
+            
+            console.log('Navigation called');
+            
+        } catch (error) {
+            console.error('ERROR in onSubmit:', error);
+            alert(`Error creating invoice: ${error}`);
+        }
     };
+
+    // Show loading if user not loaded yet
+    if (!user) {
+        return (
+            <div className="flex items-center justify-center min-h-screen">
+                <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+            </div>
+        );
+    }
 
     return (
             <> 
@@ -83,7 +111,10 @@ const CreateInvoice: React.FC = () => {
                 <footer className=" flex justify-center items-center px-6 py-4 space-x-4 bg-white-custom dark:bg-strong-blue ">
                     <button
                         type="button"
-                        onClick={() => navigate(-1)}
+                        onClick={() => {
+                            console.log('Discard clicked, navigating to /invoices');
+                            navigate('/invoices');
+                        }}
                         className="w-20 h-12 text-purple font-bold dark:text-white bg-light-gray dark:bg-light-blue rounded-3xl hover:bg-gray-100 dark:hover:bg-white hover:text-[#7E88C3] cursor-pointer transition"
                     >
                         Discard

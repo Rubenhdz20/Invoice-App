@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { AnimatePresence, motion } from "framer-motion";
+import { useUser } from "@clerk/clerk-react";
 import { useMediaQuery } from "../../hooks/useMediaQuery";
 import { useInvoiceStore } from "../../store/InvoiceStore";
 import GoBackButton from "../../components/buttons/GoBackButton";
@@ -31,10 +32,35 @@ interface EditInvoiceProps {
 const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const invoices = useInvoiceStore((s) => s.invoices);
+  const { user, isLoaded } = useUser();
+  
+  // ✅ Use user-specific invoice getter
+  const getUserInvoices = useInvoiceStore((s) => s.getUserInvoices);
   const updateInvoice = useInvoiceStore((s) => s.updateInvoice);
-  const invoice = invoices.find((inv) => inv.id === id);
-  const isTabletUp = useMediaQuery("(min-width: 768px)"); // True for tablet and desktop
+  const setCurrentUser = useInvoiceStore((s) => s.setCurrentUser);
+  const currentUserId = useInvoiceStore((s) => s.currentUserId);
+  
+  const isTabletUp = useMediaQuery("(min-width: 768px)");
+
+  // ✅ Set current user when component loads
+  useEffect(() => {
+    if (isLoaded && user && !currentUserId) {
+      console.log('EditInvoice - Setting current user:', user.id);
+      setCurrentUser(user.id);
+    }
+  }, [user, isLoaded, currentUserId, setCurrentUser]);
+
+  // ✅ Get user's invoices and find the specific one
+  const userInvoices = getUserInvoices();
+  const invoice = userInvoices.find((inv) => inv.id === id);
+
+  console.log('EditInvoice Debug:', {
+    userId: user?.id,
+    currentUserId,
+    invoiceId: id,
+    userInvoicesCount: userInvoices.length,
+    foundInvoice: !!invoice
+  });
 
   const {
     register,
@@ -61,41 +87,82 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
     if (invoice) reset(invoice as any);
   }, [invoice, reset]);
 
+  // Show loading while Clerk initializes
+  if (!isLoaded) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-purple-600"></div>
+      </div>
+    );
+  }
+
+  // Show error if invoice not found
   if (!invoice) {
     return (
-      <div className="p-6 text-white">
+      <div className="p-6 text-gray-900 dark:text-white">
         <GoBackButton />
-        Invoice not found
+        <div className="mt-4 text-center">
+          <h2 className="text-xl font-bold mb-2">Invoice not found</h2>
+          <p className="text-gray-600 dark:text-gray-400">
+            The invoice you're looking for doesn't exist or you don't have permission to edit it.
+          </p>
+          <button 
+            onClick={() => navigate('/invoices')}
+            className="mt-4 px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
+          >
+            Back to Invoices
+          </button>
+        </div>
       </div>
     );
   }
 
   const onSubmit = (data: InvoiceFormValues) => {
-    const itemsWithTotals = data.items.map((item) => ({
-      ...item,
-      total: item.quantity * item.price,
-    }));
-    const invoiceTotal = itemsWithTotals.reduce((sum, i) => sum + i.total, 0);
-    updateInvoice({
-      ...invoice,
-      ...data,
-      items: itemsWithTotals,
-      total: invoiceTotal,
-    });
-    if (isTabletUp) {
-      onSave(); // close overlay passed from parent
-    } else {
-      navigate(`/invoice/${id}`, { replace: true });
+    try {
+      console.log('EditInvoice - Starting update...', data);
+      
+      const itemsWithTotals = data.items.map((item) => ({
+        ...item,
+        total: item.quantity * item.price,
+      }));
+      
+      const invoiceTotal = itemsWithTotals.reduce((sum, i) => sum + i.total, 0);
+      
+      const updatedInvoice = {
+        ...invoice,
+        ...data,
+        items: itemsWithTotals,
+        total: invoiceTotal,
+      };
+
+      console.log('EditInvoice - About to update invoice:', updatedInvoice);
+      
+      updateInvoice(updatedInvoice);
+      
+      console.log('EditInvoice - Invoice updated successfully');
+      
+      if (isTabletUp) {
+        onSave(); // close overlay passed from parent
+      } else {
+        navigate(`/invoice/${id}`, { replace: true });
+      }
+      
+    } catch (error) {
+      console.error('EditInvoice - Error updating invoice:', error);
+      alert(`Error updating invoice: ${error}`);
     }
-    console.log("🏁 onSubmit fired with", data);
   };
 
   const handleCancel = () => {
-    // This logic should also be consolidated
-    if (isTabletUp) {
-      onCancel(); // close overlay passed from parent
-    } else {
-      navigate(-1); // navigate back to previous page (detail page) on mobile
+    try {
+      if (isTabletUp) {
+        onCancel(); // close overlay passed from parent
+      } else {
+        navigate('/invoices'); // ✅ Navigate to invoices list instead of back
+      }
+    } catch (error) {
+      console.error('EditInvoice - Error in handleCancel:', error);
+      navigate('/invoices'); // Fallback navigation
     }
   };
 
@@ -105,21 +172,19 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   // The actual form content, shared across all breakpoints
   const formContent = (
     <>
-      {/* GoBackButton and H1 might need conditional rendering or layout adjustments with Tailwind
-          if their positions differ significantly between mobile and tablet/desktop.
-          For now, I'm putting them here. */}
-      {/* If GoBackButton's appearance/placement is different on mobile/tablet */}
-      {!isTabletUp && <GoBackButton />} {/* Mobile-only placement */}
+      {!isTabletUp && <GoBackButton />}
       
-      {isTabletUp && ( // Tablet/Desktop specific placement and wrapper for h1 & back button
+      {isTabletUp && (
          <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold dark:text-white">
               Edit <span className="text-purple">#{invoice.id}</span>
             </h1>
          </div>
       )}
-      {!isTabletUp && ( // Mobile specific h1
-        <h1 className="text-2xl font-bold dark:text-white">Edit <span className="text-purple">#{invoice.id}</span></h1>
+      {!isTabletUp && (
+        <h1 className="text-2xl font-bold dark:text-white">
+          Edit <span className="text-purple">#{invoice.id}</span>
+        </h1>
       )}
       <BillFromSection control={control} errors={errors} />
       <BillToSection register={register} errors={errors} />
@@ -129,16 +194,14 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
         <button
           type="button"
           onClick={handleCancel}
-          className="px-4 py-2 bg-card-gray text-strong-gray dark:text-white-custom dark:bg-light-blue font-bold rounded-2xl cursor-pointer"
+          className="px-4 py-2 bg-card-gray text-strong-gray dark:text-white-custom dark:bg-light-blue font-bold rounded-2xl cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
         >
           Cancel
         </button>
         <button
           type="submit"
-          form={formId} // IMPORTANT: Use the single formId here
-          className="px-6 py-2 bg-strong-violet rounded-2xl text-white bg-strong-purple dark:bg-purple hover:bg-purple dark:hover:bg-light-blue transition-colors duration-200 cursor-pointer "
-          // No need for onClick={handleSubmit(onSubmit)} if type="submit" and form ID is correct
-          // The form's onSubmit handler will take care of it
+          form={formId}
+          className="px-6 py-2 bg-strong-violet rounded-2xl text-white bg-strong-purple dark:bg-purple hover:bg-purple dark:hover:bg-light-blue transition-colors duration-200 cursor-pointer"
         >
           Save Changes
         </button>
@@ -147,7 +210,6 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   );
 
   // Conditional rendering of the Animated Panel vs. full-screen form
-
   if (isTabletUp) {
     return (
      <AnimatePresence>
@@ -174,7 +236,7 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
           transition={{ type: "tween", duration: 0.25 }}
         >
           <form id={formId} onSubmit={handleSubmit(onSubmit)} className="min-h-full p-6 space-y-6">
-            {formContent} {/* Render the shared content here */}
+            {formContent}
           </form>
         </motion.div>
       </AnimatePresence>
@@ -183,7 +245,7 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
     // Mobile mode: render form full-screen, no animation
     return (
       <form id={formId} onSubmit={handleSubmit(onSubmit)} className="min-h-screen p-6 space-y-6 bg:dark-2 bg-white dark:bg-dark-2">
-        {formContent} {/* Render the shared content here */}
+        {formContent}
       </form>
     );
   }
