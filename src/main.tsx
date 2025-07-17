@@ -1,23 +1,20 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App'
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { ClerkProvider } from '@clerk/clerk-react'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import { ClerkProvider } from "@clerk/clerk-react";
 
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY!;
+const FRONTEND_API   = import.meta.env.VITE_CLERK_FRONTEND_API!;
 
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
-const frontendApi   = import.meta.env.VITE_CLERK_FRONTEND_API;
-
-if (!PUBLISHABLE_KEY || !frontendApi) {
-  throw new Error('Missing Publishable Key');
-}
-
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <ClerkProvider publishableKey={PUBLISHABLE_KEY} afterSignOutUrl='/'>
+    <ClerkProvider
+      publishableKey={PUBLISHABLE_KEY}
+      frontendApi={FRONTEND_API}
+      afterSignOutUrl="/"
+    >
       <App />
     </ClerkProvider>
-  </React.StrictMode>,
-)
+  </React.StrictMode>
+);

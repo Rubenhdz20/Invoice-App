@@ -7,8 +7,9 @@ import Moon from "../assets/icon-moon.svg";
 import Sun from "../assets/icon-sun.svg";
 
 interface Props {
-  onToggleTheme: () => void
-  current: 'light'|'dark'
+  onToggleTheme: () => void;
+  current: 'light'|'dark';
+  children?: React.ReactNode;
 }
 
 const Header: React.FC<Props> = ({ onToggleTheme, current }) => {
