@@ -1,14 +1,14 @@
 import { SignIn } from "@clerk/clerk-react";
 import React from "react";
 
-// SignInPage.tsx
 export default function SignInPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-dark-2">
+    <div className="flex items-center justify-center min-h-screen bg-white-custom dark:bg-dark-2 p-6">
       <SignIn 
-        path="/sign-in"
-        signUpUrl="/sign-up"
+        path="/sign-in" 
+        routing="path"
         forceRedirectUrl="/invoices"
+        fallbackRedirectUrl="/invoices"
         appearance={{
           variables: {
             colorPrimary: "#8B5CF6",

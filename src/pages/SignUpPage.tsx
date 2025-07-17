@@ -3,12 +3,12 @@ import React from "react";
 
 export default function SignUpPage() {
   return (
-    <div className="flex items-center justify-center min-h-screen bg-dark-2">
+    <div className="flex items-center justify-center min-h-screen bg-white-custom dark:bg-dark-2">
       <SignUp 
+        path="/sign-up" 
         routing="path"
-        path="/sign-up"
-        signInUrl="/sign-in"
         forceRedirectUrl="/invoices"
+        fallbackRedirectUrl="/invoices"
         appearance={{
           variables: {
             colorPrimary: "#8B5CF6",
