@@ -9,7 +9,10 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tailwindcss": "tailwindcss -i ./src/App.css -o ./public/output.css --watch",
-    "clean": "rm -rf dist"
+    "clean": "rm -rf dist",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@clerk/clerk-react": "^5.35.3",
