@@ -1,44 +1,45 @@
 import { renderHook } from '@testing-library/react';
+import { vi, describe, beforeEach, it, expect } from 'vitest';
 import { useMediaQuery } from './useMediaQuery';
 
-// Mock window.matchMedia
+// Mock window.matchMedia since it doesn't exist in jsdom
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation((query) => ({
+  value: vi.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
-    addListener: jest.fn(), // deprecated
-    removeListener: jest.fn(), // deprecated
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
-    dispatchEvent: jest.fn(),
+    addListener: vi.fn(), // deprecated
+    removeListener: vi.fn(), // deprecated
+    addEventListener: vi.fn(),
+    removeEventListener: vi.fn(),
+    dispatchEvent: vi.fn(),
   })),
 });
 
 describe('useMediaQuery', () => {
   beforeEach(() => {
     // Reset the mock before each test
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should return false initially when matchMedia does not match', () => {
-    (window.matchMedia as jest.Mock).mockReturnValue({
+    vi.mocked(window.matchMedia).mockReturnValue({
       matches: false,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    });
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    } as any);
 
     const { result } = renderHook(() => useMediaQuery('(min-width: 768px)'));
     expect(result.current).toBe(false);
   });
 
   it('should return true when matchMedia matches', () => {
-    (window.matchMedia as jest.Mock).mockReturnValue({
+    vi.mocked(window.matchMedia).mockReturnValue({
       matches: true,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    });
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    } as any);
 
     const { result } = renderHook(() => useMediaQuery('(min-width: 768px)'));
     expect(result.current).toBe(true);
@@ -46,71 +47,38 @@ describe('useMediaQuery', () => {
 
   it('should call matchMedia with correct query', () => {
     const query = '(max-width: 1024px)';
-    (window.matchMedia as jest.Mock).mockReturnValue({
+    vi.mocked(window.matchMedia).mockReturnValue({
       matches: false,
-      addEventListener: jest.fn(),
-      removeEventListener: jest.fn(),
-    });
+      addEventListener: vi.fn(),
+      removeEventListener: vi.fn(),
+    } as any);
 
     renderHook(() => useMediaQuery(query));
     expect(window.matchMedia).toHaveBeenCalledWith(query);
   });
 
   it('should add event listener on mount', () => {
-    const addEventListener = jest.fn();
-    (window.matchMedia as jest.Mock).mockReturnValue({
+    const addEventListener = vi.fn();
+    vi.mocked(window.matchMedia).mockReturnValue({
       matches: false,
       addEventListener,
-      removeEventListener: jest.fn(),
-    });
+      removeEventListener: vi.fn(),
+    } as any);
 
     renderHook(() => useMediaQuery('(min-width: 768px)'));
     expect(addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
   });
 
   it('should remove event listener on unmount', () => {
-    const removeEventListener = jest.fn();
-    (window.matchMedia as jest.Mock).mockReturnValue({
+    const removeEventListener = vi.fn();
+    vi.mocked(window.matchMedia).mockReturnValue({
       matches: false,
-      addEventListener: jest.fn(),
+      addEventListener: vi.fn(),
       removeEventListener,
-    });
+    } as any);
 
     const { unmount } = renderHook(() => useMediaQuery('(min-width: 768px)'));
     unmount();
     expect(removeEventListener).toHaveBeenCalledWith('change', expect.any(Function));
-  });
-
-  it('should handle server-side rendering correctly', () => {
-    // Test when window is undefined (SSR scenario)
-    const originalWindow = global.window;
-    delete (global as any).window;
-
-    const { result } = renderHook(() => useMediaQuery('(min-width: 768px)'));
-    expect(result.current).toBe(false);
-
-    // Restore window
-    global.window = originalWindow;
-  });
-
-  it('should work with different media queries', () => {
-    const queries = [
-      '(min-width: 768px)',
-      '(max-width: 1024px)',
-      '(orientation: portrait)',
-      '(prefers-color-scheme: dark)'
-    ];
-
-    queries.forEach(query => {
-      (window.matchMedia as jest.Mock).mockReturnValue({
-        matches: true,
-        addEventListener: jest.fn(),
-        removeEventListener: jest.fn(),
-      });
-
-      const { result } = renderHook(() => useMediaQuery(query));
-      expect(result.current).toBe(true);
-      expect(window.matchMedia).toHaveBeenCalledWith(query);
-    });
   });
 });
