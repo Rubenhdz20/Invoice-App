@@ -2,7 +2,7 @@ import { renderHook, act } from '@testing-library/react';
 import { vi, describe, beforeEach, it, expect } from 'vitest';
 import useThemeStore from './Theme';
 
-// Mock localStorage
+// Mock localStorage globally
 const localStorageMock = {
   getItem: vi.fn(),
   setItem: vi.fn(),
@@ -10,30 +10,48 @@ const localStorageMock = {
   clear: vi.fn(),
 };
 
-global.localStorage = localStorageMock as any;
+// Replace the global localStorage
+Object.defineProperty(global, 'localStorage', {
+  value: localStorageMock,
+  writable: true,
+});
 
 describe('useThemeStore', () => {
   beforeEach(() => {
-    localStorage.clear();
+    // Clear all mocks before each test
     vi.clearAllMocks();
+    
+    // Reset localStorage mock
+    localStorageMock.getItem.mockReturnValue(null);
+    localStorageMock.setItem.mockClear();
+    
+    // Reset Zustand store state
+    useThemeStore.setState({ theme: 'light' });
   });
 
   it('should initialize with light theme by default', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue(null);
+    localStorageMock.getItem.mockReturnValue(null);
     
+    // Create a fresh store instance
     const { result } = renderHook(() => useThemeStore());
     expect(result.current.theme).toBe('light');
   });
 
   it('should initialize with saved theme from localStorage', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue('dark');
+    localStorageMock.getItem.mockReturnValue('dark');
+    
+    // Reset store to pick up the mocked localStorage value
+    useThemeStore.setState({ 
+      theme: (localStorage.getItem('theme') as 'light' | 'dark') || 'light' 
+    });
     
     const { result } = renderHook(() => useThemeStore());
     expect(result.current.theme).toBe('dark');
   });
 
   it('should toggle from light to dark theme', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue('light');
+    // Start with light theme
+    useThemeStore.setState({ theme: 'light' });
     
     const { result } = renderHook(() => useThemeStore());
     
@@ -42,11 +60,12 @@ describe('useThemeStore', () => {
     });
     
     expect(result.current.theme).toBe('dark');
-    expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'dark');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'dark');
   });
 
   it('should toggle from dark to light theme', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue('dark');
+    // Start with dark theme
+    useThemeStore.setState({ theme: 'dark' });
     
     const { result } = renderHook(() => useThemeStore());
     
@@ -55,11 +74,12 @@ describe('useThemeStore', () => {
     });
     
     expect(result.current.theme).toBe('light');
-    expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'light');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'light');
   });
 
   it('should persist theme changes to localStorage', () => {
-    vi.mocked(localStorage.getItem).mockReturnValue('light');
+    // Start with light theme
+    useThemeStore.setState({ theme: 'light' });
     
     const { result } = renderHook(() => useThemeStore());
     
@@ -67,12 +87,12 @@ describe('useThemeStore', () => {
       result.current.toggle();
     });
     
-    expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'dark');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'dark');
     
     act(() => {
       result.current.toggle();
     });
     
-    expect(localStorage.setItem).toHaveBeenCalledWith('theme', 'light');
+    expect(localStorageMock.setItem).toHaveBeenCalledWith('theme', 'light');
   });
 });

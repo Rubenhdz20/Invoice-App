@@ -1,12 +1,11 @@
 import { defineConfig } from 'vitest/config'
 import react from '@vitejs/plugin-react'
-import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react()],
   test: {
-    environment: 'jsdom', // This is crucial!
+    environment: 'jsdom',
     globals: true,
-    setupFiles: ['src/tests/setup.ts'],
+    setupFiles: ['./src/tests/setup.ts'], // Make sure this path is correct
   },
 })
