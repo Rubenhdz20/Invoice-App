@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, Navigate, Outlet } from "react-router-dom
 import {
   SignedIn,
   SignedOut,
-  RedirectToSignIn,
   useAuth,
   UserButton,
 } from "@clerk/clerk-react";
