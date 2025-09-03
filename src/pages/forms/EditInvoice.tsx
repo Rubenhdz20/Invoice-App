@@ -84,7 +84,7 @@ const EditInvoice: React.FC<EditInvoiceProps> = ({ onCancel, onSave }) => {
   });
 
   useEffect(() => {
-    if (invoice) reset(invoice as any);
+    if (invoice) reset(invoice as InvoiceFormValues);
   }, [invoice, reset]);
 
   // Show loading while Clerk initializes

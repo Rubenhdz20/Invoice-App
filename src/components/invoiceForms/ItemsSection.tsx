@@ -2,6 +2,7 @@ import React from 'react'
 import { Control, useFieldArray, useWatch, UseFormRegister, FieldErrors } from 'react-hook-form'
 import { InvoiceFormValues } from "../../pages/forms/CreateInvoice"; 
 import { formatCurrency } from '../../utils/formatCurrency'
+import { calculateLineSubtotal } from '../../utils/calculateLineSubtotal'
 
 interface Props {
   control: Control<InvoiceFormValues>
@@ -34,7 +35,7 @@ const ItemsSection = ({ control, register, errors }: Props) => {
 
                 {fields.map((field, index) => {
                     const { quantity = 0, price = 0 } = watchedItems[index] ?? {};
-                    const total = quantity * price;
+                    const total = calculateLineSubtotal(quantity, price);
                     return (
                     <div key={field.id} className="flex flex-col gap-4">
                         {/* Item Name */}

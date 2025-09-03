@@ -22,7 +22,6 @@ const CreateInvoice: React.FC = () => {
         register,
         control,
         handleSubmit,
-        reset,
         formState: { errors },
     } = useForm<InvoiceFormValues>({
         defaultValues: {
