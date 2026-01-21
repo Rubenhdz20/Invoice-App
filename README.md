@@ -52,27 +52,6 @@ A full-featured Invoice Management Web Application built with React, TypeScript,
 ![Screenshot 2025-06-22 at 5 37 32 p m](https://github.com/user-attachments/assets/5b7d9f9f-3416-41db-a699-e623e1f175e6)
 
 
-## 📦 Installation
-
-1️⃣ Clone the repository:
-
-git clone https://github.com/YOUR_USERNAME/Invoice-App.git
-cd Invoice-App
-
-2️⃣ Install dependencies:
-
-npm install
-
-3️⃣ Start the development server:
-
-npm run dev
-
-App runs at http://localhost:5173/
-
-## 🚧 Planned Future Improvements
-	•	🔐 Add User Authentication (e.g. Firebase, Supabase)
-	•	✅ Full testing suite with Jest + React Testing Library
-
 ## 🙋‍♂️ Author
 
 Ruben Hernandez
