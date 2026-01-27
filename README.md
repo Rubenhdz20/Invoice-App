@@ -6,7 +6,7 @@ A full-featured Invoice Management Web Application built with React, TypeScript,
 
 ## 🚀 Live Demo
 
-👉 https://invoiceappexpenses.netlify.app/
+👉 https://invoice-app.lat/
 
 ---
 
