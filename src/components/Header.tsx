@@ -14,7 +14,7 @@ interface Props {
 
 const Header: React.FC<Props> = ({ onToggleTheme, current }) => {
     return (
-        <header className="flex justify-between items-center bg-strong-blue lg:flex-col lg:justify-between lg:items-center lg:w-20 lg:h-screen lg:sticky lg:top-0 lg:self-start lg:shrink-0">
+        <header className="flex justify-between items-center bg-strong-blue lg:flex-col lg:justify-between lg:items-center lg:w-20 lg:fixed lg:inset-y-0 lg:left-0 lg:h-screen lg:z-40">
             <div>
                 <img src={LogoApp} alt="Invoice App Logo" />
             </div>

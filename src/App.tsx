@@ -31,7 +31,7 @@ function ProtectedLayout() {
         <Header onToggleTheme={toggle} current={theme}>
           <UserButton /> 
         </Header>
-        <main className="flex-1 bg-white-custom dark:bg-dark-2 p-6">
+        <main className="flex-1 lg:ml-20 bg-white-custom dark:bg-dark-2 p-6">
           <Outlet />
         </main>
       </div>
