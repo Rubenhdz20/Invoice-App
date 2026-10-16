@@ -25,6 +25,7 @@ function ProtectedLayout() {
   }, [theme]);
 
   return (
+    <>
     <SignedIn>
       <div className="flex flex-col lg:flex-row min-h-screen">
         <Header onToggleTheme={toggle} current={theme}>
@@ -35,14 +36,23 @@ function ProtectedLayout() {
         </main>
       </div>
     </SignedIn>
+    <SignedOut>
+      <RedirectToSignIn />
+    </SignedOut>
+    </>
   );
 }
 
 function AuthLayout() {
   return (
-    <SignedOut>
-      <Outlet />
-    </SignedOut>
+    <>
+      <SignedOut>
+        <Outlet />
+      </SignedOut>
+      <SignedIn>
+        <Navigate to="/invoices" replace />
+      </SignedIn>
+    </>
   );
 }
 
@@ -72,9 +82,7 @@ export default function App() {
         <Route 
           path="*"
           element={
-            <SignedIn>
-              <Navigate to="/invoices" replace />
-            </SignedIn>
+            <Navigate to="/invoices" replace />
           }
         />
       </Routes>
